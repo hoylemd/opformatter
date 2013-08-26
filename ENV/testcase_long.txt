@@ -1,0 +1,47 @@
+Master Scourge CR 3
+XP 800
+Male human fighter 2/rogue 2
+NE Medium humanoid (human)
+Init +7; Senses Perception +1
+DEFENSE
+AC 15, touch 13, flat-footed 12 (+2 armor, +3 Dex)
+hp 32 (4 HD; 2d10+2d8+8)
+Fort +5, Ref +6, Will +3; +1 vs. fear
+Defensive Abilities bravery +1, evasion
+OFFENSE
+Speed 30 feet
+Melee whip +6 (1d3 nonlethal+2) or
+mwk handaxe +7 (1d6+2/×3) or
+punching dagger +6 (1d4+2/×3 plus black adder venom)
+Ranged shortbow +6 (1d6/×3)
+Special Attacks sneak attack +1d6
+TACTICS
+During Combat Scourge prefers intimidating opponents
+to fighting them. Once in combat, he attempts to attack
+from behind, flanking with his allies.
+Morale If reduced to 10 hit points or fewer, Scourge flees
+and tries to make good his escape. A man who bears
+a grudge, Scourge is certain to try to slip dark reaver
+powder or oil of taggit into the meal or drink of anyone
+who humiliates or injures him when the chance comes.
+STATISTICS
+Str 14, Dex 16, Con 15, Int 10, Wis 12, Cha 8
+Base Atk +3; CMB +5; CMD 18
+Feats Exotic Weapon Proficiency (whip), Improved Initiative,
+Intimidating Prowess, Iron Will, Weapon Finesse
+Skills Acrobatics +8, Bluff +6, Climb +9, Disable Device +8,
+Intimidate +8, Profession (sailor) +8, Sense Motive +6,
+Sleight of Hand +8, Stealth +8
+Languages Common
+SQ rogue talents (bleeding attack +1), trapfinding +1
+Combat Gear potion of blur, potion of cure light wounds, black
+adder venom (on punching dagger); Other Gear leather
+armor, punching dagger, masterwork handaxe carved
+with notches for kills, shortbow with 12 arrows in leather
+quiver with a buttoned shutter to protect them from the
+elements, whip, boatswain’s call, corked dark green bottle
+containing 8 doses of oil of taggit, six gold teeth worth
+5 gp each, hefty waxed coat with many hidden pockets,
+leather snuff box with a diamond stud worth 100 gp
+containing 1 dose of dark reaver powder, silver wedding
+ring worth 25 gp, 14 pp, 29 gp
