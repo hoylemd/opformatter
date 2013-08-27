@@ -5,29 +5,42 @@ class Parser:
     # error rule
     def __init__(self, lex):
         def p_obsidianFormat (p):
-            'obsidianFormat : firstline'
+            'obsidianFormat : name statlist'
 
-        def p_firstline (p):
-            'firstline : name challenge_rating EOL'
+        def p_statlist_recursive (p):
+            'statlist : statlist stat'
+
+        def p_statlist_single (p):
+            'statlist : stat'
+
+        def p_stat_eol (p):
+            'stat : stat EOL'
+
+        def p_stat_challenge (p) :
+            'stat : challenge_rating'
+
+        def p_stat_xp_value (p) :
+            'stat : xp_value'
+
+        def p_name (p) :
+            'name : words'
             self.character.name = p[1]
+
+        def p_challenge_rating (p) :
+            'challenge_rating : CR NUMBER'
             self.character.challenge = p[2]
 
-        def p_name (p):
-            'name : words'
-            p[0] = p[1]
+        def p_xp_value (p) :
+            'xp_value : XP NUMBER'
+            self.character.xp_value = p[2]
 
-        def p_words (p):
+        def p_words (p) :
             'words : WORD'
             p[0] = p[1]
 
         def p_words_multiple (p):
             'words : words WORD'
             p[0] = p[1] + " " + p[2]
-
-        def p_challenge_rating (p):
-            'challenge_rating : CR NUMBER'
-            p[0] = p[2]
-
 
         """def p_dice_definition (p):
             'dice_definition : NUMBER D NUMBER'

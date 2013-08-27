@@ -3,31 +3,37 @@ import ply.lex as lex
 class Lexer:
     # build the lexer
     def __init__ (self):
-        reserved = {
+        abbreviations = {
            'CR' : 'CR',
            'XP' : 'XP',
         }
 
+        genders = ['Male', 'Female']
+
         #token list
         tokens = [
             'EOL',
+            'SOLIDUS',
             'NUMBER',
             'D',
             'WORD',
-        ] + list(reserved.values())
+            'GENDER',
+        ] + list(abbreviations.values())
 
         self.tokens = tokens
 
         # Regular expression rules for simple tokens
-        t_EOL            = "[\n\r]+"
-        #t_WHITESPACE    = '[ \t]+'
-        t_D                = '[dD]'
+        t_EOL           = '[\n\r]+'
+        t_D             = '[dD]'
+        t_SOLIDUS       = '[/]'
 
         #function to disambiguate special words
         def t_WORD(t):
             r'[a-zA-Z]+'
-            # Check for reserved words
-            t.type = reserved.get(t.value,'WORD')
+            # Check for abbreviations words
+            t.type = abbreviations.get(t.value,'WORD')
+            if t.type == 'WORD' and t.value in genders:
+                t.type = 'GENDER'
             return t
 
         # Regex rule w/ action code
