@@ -22,6 +22,9 @@ class Parser:
         def p_stat_xp_value (p) :
             'stat : xp_value'
 
+        def p_stat_core (p) :
+            'stat : core'
+
         def p_name (p) :
             'name : words'
             self.character.name = p[1]
@@ -33,6 +36,29 @@ class Parser:
         def p_xp_value (p) :
             'xp_value : XP NUMBER'
             self.character.xp_value = p[2]
+
+        def p_core (p) :
+            'core : race_definition class_definitions'
+            self.character.classes = p[2]
+
+        def p_race (p) :
+            'race_definition : GENDER words'
+            self.character.gender = p[1]
+            self.character.race = p[2]
+
+        def p_class_definitions_list (p) :
+            'class_definitions : class_definitions SOLIDUS class_definition'
+            class_list = p[1]
+            class_list.append(p[3])
+            p[0] = class_list
+
+        def p_class_definitions (p) :
+            'class_definitions : class_definition'
+            p[0] = [p[1]];
+
+        def p_class_definition (p) :
+            'class_definition : CLASS NUMBER'
+            p[0] = {'class' : p[1], 'level' : p[2]}
 
         def p_words (p) :
             'words : WORD'

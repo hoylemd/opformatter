@@ -10,6 +10,34 @@ class Lexer:
 
         genders = ['Male', 'Female']
 
+        classes = [
+            'barbarian',
+            'bard',
+            'cleric',
+            'druid',
+            'fighter',
+            'monk',
+            'paladin',
+            'ranger',
+            'rogue',
+            'sorcerer',
+            'wizard',
+            'arcane archer',
+            'arcane trickster',
+            'assassin',
+            'dragon disciple',
+            'eldrich knight',
+            'loremaster',
+            'mystic theurge',
+            'pathfinder chronicler',
+            'shadowdancer',
+            'adept',
+            'aristocrat',
+            'commoner',
+            'expert',
+            'warrior',
+        ]
+
         #token list
         tokens = [
             'EOL',
@@ -18,6 +46,7 @@ class Lexer:
             'D',
             'WORD',
             'GENDER',
+            'CLASS',
         ] + list(abbreviations.values())
 
         self.tokens = tokens
@@ -32,8 +61,12 @@ class Lexer:
             r'[a-zA-Z]+'
             # Check for abbreviations words
             t.type = abbreviations.get(t.value,'WORD')
-            if t.type == 'WORD' and t.value in genders:
-                t.type = 'GENDER'
+            if t.type == 'WORD':
+                if t.value in genders:
+                    t.type = 'GENDER'
+                elif t.value in classes:
+                    t.type = 'CLASS'
+
             return t
 
         # Regex rule w/ action code
