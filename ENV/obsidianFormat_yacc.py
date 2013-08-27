@@ -25,6 +25,9 @@ class Parser:
         def p_stat_core (p) :
             'stat : core'
 
+        def p_stat_bio (p) :
+            'stat : bio'
+
         def p_name (p) :
             'name : words'
             self.character.name = p[1]
@@ -59,6 +62,52 @@ class Parser:
         def p_class_definition (p) :
             'class_definition : CLASS NUMBER'
             p[0] = {'class' : p[1], 'level' : p[2]}
+
+        def p_bio (p) :
+            'bio : alignment size_definition type_definition'
+            self.character.alignment = p[1]
+            self.character.size = p[2]
+            self.character.creature_type = p[3]
+
+        def p_alignment (p) :
+            'alignment : ALIGNMENT'
+            moral = p[1][:1]
+            ethical = p[1][1:]
+            p[0] = {'moral' : 0, 'ethical' : 0}
+            if moral == 'L':
+                p[0]['moral'] = 1
+            elif moral == 'C':
+                p[0]['moral'] = -1
+
+            if ethical == 'G':
+                p[0]['ethical'] = 1
+            elif ethical == 'E':
+                p[0]['ethical'] = -1
+
+        def p_size_definition (p) :
+            'size_definition : SIZE'
+            p[0] = p[1]
+
+        def p_size_definition_refined (p) :
+            'size_definition : SIZE LPAREN SIZE_MOD RPAREN'
+            p[0] = p[1] + " (" + p[3] + ")"
+
+        def p_type_definition (p) :
+            'type_definition : CREATURE_TYPE'
+            p[0] = {'primary' : p[1], 'subtypes' : []}
+
+        def p_type_definition_subs (p) :
+            'type_definition : CREATURE_TYPE LPAREN wordlist RPAREN'
+            p[0] = {'primary' : p[1], 'subtypes' : p[3]}
+
+        def p_wordlist_list (p):
+            'wordlist : wordlist COMMA words'
+            p[0] = p[1]
+            p[0].append(p[3])
+
+        def p_wordlist (p) :
+            'wordlist : words'
+            p[0] = [p[1]]
 
         def p_words (p) :
             'words : WORD'
