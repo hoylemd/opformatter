@@ -38,15 +38,69 @@ class Lexer:
             'warrior',
         ]
 
+        creature_types = [
+            'abberation',
+            'animal',
+            'construct',
+            'dragon',
+            'fey',
+            'humanoid',
+            'magical beast',
+            'monstrous humanoid',
+            'ooze',
+            'outsider',
+            'plant',
+            'undead',
+            'vermin',
+        ]
+
+        alignments = [
+            'LG',
+            'NG',
+            'CG',
+            'LN',
+            'TN',
+            'NN',
+            'CN',
+            'LE',
+            'NE',
+            'CE',
+        ]
+
+        sizes = [
+            'Fine',
+            'Diminutive',
+            'Tiny',
+            'Small',
+            'Medium',
+            'Large',
+            'Huge',
+            'Gargantual',
+            'Colossal',
+        ]
+
+        size_modifiers = [
+            'tall',
+            'long'
+        ]
+
         #token list
         tokens = [
             'EOL',
             'SOLIDUS',
+            'LPAREN',
+            'RPAREN',
+            'COMMA',
             'NUMBER',
             'D',
             'WORD',
             'GENDER',
             'CLASS',
+            'ALIGNMENT',
+            'SIZE',
+            'SIZE_MOD',
+            'CREATURE_TYPE',
+
         ] + list(abbreviations.values())
 
         self.tokens = tokens
@@ -55,6 +109,9 @@ class Lexer:
         t_EOL           = '[\n\r]+'
         t_D             = '[dD]'
         t_SOLIDUS       = '[/]'
+        t_LPAREN        = '\('
+        t_RPAREN        = '\)'
+        t_COMMA         = ','
 
         #function to disambiguate special words
         def t_WORD(t):
@@ -66,6 +123,14 @@ class Lexer:
                     t.type = 'GENDER'
                 elif t.value in classes:
                     t.type = 'CLASS'
+                elif t.value in alignments:
+                    t.type = 'ALIGNMENT'
+                elif t.value in sizes:
+                    t.type = 'SIZE'
+                elif t.value in size_modifiers:
+                    t.type = 'SIZE_MOD'
+                elif t.value in creature_types:
+                    t.type = 'CREATURE_TYPE'
 
             return t
 
