@@ -6,6 +6,7 @@ class Lexer:
         abbreviations = {
            'CR' : 'CR',
            'XP' : 'XP',
+           'Init': 'INIT',
         }
 
         genders = ['Male', 'Female']
@@ -91,6 +92,8 @@ class Lexer:
             'LPAREN',
             'RPAREN',
             'COMMA',
+            'PLUS',
+            'SEMICOLON',
             'NUMBER',
             'D',
             'WORD',
@@ -112,6 +115,8 @@ class Lexer:
         t_LPAREN        = '\('
         t_RPAREN        = '\)'
         t_COMMA         = ','
+        t_PLUS          = '\+'
+        t_SEMICOLON     = ';'
 
         #function to disambiguate special words
         def t_WORD(t):
