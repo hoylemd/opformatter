@@ -14,10 +14,13 @@ class Parser:
         def p_stat (p):
             '''
             stat : stat EOL
+                | stat SEMICOLON
                 | challenge_rating
                 | xp_value
                 | core
                 | bio
+                | initiative
+                | senses
             '''
 
         def p_name (p) :
@@ -98,6 +101,18 @@ class Parser:
             else :
                 p[0] = {'primary' : p[1], 'subtypes' : []}
 
+        def p_initiative (p):
+            '''
+            initiative : INIT modifier
+            '''
+            self.character.initiative = p[2]
+
+        def p_senses (p):
+            '''
+            senses : SENSES WORD modifier
+            '''
+            self.character.senses = {p[2] : p[3]}
+
         def p_wordlist (p) :
             '''
             wordlist : wordlist COMMA words
@@ -128,6 +143,12 @@ class Parser:
                 p[0] = p[1] + "d" + p[3]
             else :
                 p[0] = "1d" + p[2]
+
+        def p_modifier (p):
+            '''
+            modifier : PLUS NUMBER
+            '''
+            p[0] = p[2]
 
         # error rule
         def p_error (p):
