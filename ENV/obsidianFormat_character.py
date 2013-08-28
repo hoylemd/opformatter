@@ -1,3 +1,13 @@
+def modifier_string(modifier):
+        out = ""
+
+        if modifier > 0:
+            out += "+"
+
+        out += str(modifier);
+
+        return out
+
 class character:
     def output(self):
         out = "h3. " + self.name + "\n"
@@ -7,6 +17,8 @@ class character:
         out += self.class_string() + "\n"
         out += self.alignment_string() + " " + self.size
         out += " " + self.creature_type_string() + "\n"
+        out += "*Initiative* " + self.initiative_string() + "\n"
+        out += "*Senses* " + self.senses_string() + "\n"
 
         return out;
 
@@ -49,11 +61,23 @@ class character:
         if len(self.creature_type['subtypes']) > 0:
             subs = "("
             for subtype in self.creature_type['subtypes']:
-                if subs <> "(":
+                if subs != "(":
                     subs += ", "
                 subs += subtype
             out += subs + ")"
 
         return out
 
+    def initiative_string(self):
+        return modifier_string(self.initiative)
 
+    def senses_string(self):
+        out = ""
+
+        for sense in self.senses.keys():
+            if out != "":
+                out += ", "
+
+            out += sense + " " + modifier_string(self.senses[sense])
+
+        return out
