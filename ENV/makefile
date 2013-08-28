@@ -7,9 +7,10 @@ runcommand = python main.py
 
 all : test
 
-test : $(testinput) $(codefiles)
+clean :
+	rm -rf $(testoutput) *.pyc parsetab.py parser.out
+
+test : clean $(testinput) $(codefiles)
 	cat $(testinput) | $(runcommand) > $(testoutput)
 	diff $(testoutput) $(testgold)
 
-clean :
-	rm -rf $(testoutput) *.pyc parsetab.py parser.out
