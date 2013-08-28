@@ -4,9 +4,10 @@ class Lexer:
     # build the lexer
     def __init__ (self):
         abbreviations = {
-           'CR' : 'CR',
-           'XP' : 'XP',
-           'Init': 'INIT',
+            'CR' : 'CR',
+            'XP' : 'XP',
+            'Init': 'INIT',
+            'Senses': 'SENSES',
         }
 
         genders = ['Male', 'Female']
@@ -115,7 +116,7 @@ class Lexer:
         t_LPAREN        = '\('
         t_RPAREN        = '\)'
         t_COMMA         = ','
-        t_PLUS          = '\+'
+        t_PLUS          = r'\+'
         t_SEMICOLON     = ';'
 
         #function to disambiguate special words
@@ -153,7 +154,7 @@ class Lexer:
             return t
 
         # ignore
-        t_ignore = '[ \t]+'
+        t_ignore = ' \t'
 
         # error handler
         def t_error(t):
