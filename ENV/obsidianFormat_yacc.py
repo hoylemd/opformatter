@@ -7,24 +7,18 @@ class Parser:
         def p_obsidianFormat (p):
             'obsidianFormat : name statlist'
 
-        def p_statlist_recursive (p):
+        def p_statlist (p):
             '''statlist : statlist stat
                         | stat'''
 
-        def p_stat_eol (p):
-            'stat : stat EOL'
-
-        def p_stat_challenge (p) :
-            'stat : challenge_rating'
-
-        def p_stat_xp_value (p) :
-            'stat : xp_value'
-
-        def p_stat_core (p) :
-            'stat : core'
-
-        def p_stat_bio (p) :
-            'stat : bio'
+        def p_stat (p):
+            '''
+            stat : stat EOL
+                | challenge_rating
+                | xp_value
+                | core
+                | bio
+            '''
 
         def p_name (p) :
             'name : words'
@@ -47,15 +41,17 @@ class Parser:
             self.character.gender = p[1]
             self.character.race = p[2]
 
-        def p_class_definitions_list (p) :
-            'class_definitions : class_definitions SOLIDUS class_definition'
-            class_list = p[1]
-            class_list.append(p[3])
-            p[0] = class_list
-
         def p_class_definitions (p) :
-            'class_definitions : class_definition'
-            p[0] = [p[1]];
+            '''
+            class_definitions : class_definitions SOLIDUS class_definition
+                | class_definition
+            '''
+            if len(p) > 2:
+                class_list = p[1]
+                class_list.append(p[3])
+                p[0] = class_list
+            else:
+                p[0] = [p[1]];
 
         def p_class_definition (p) :
             'class_definition : CLASS NUMBER'
@@ -83,60 +79,57 @@ class Parser:
                 p[0]['ethical'] = -1
 
         def p_size_definition (p) :
-            'size_definition : SIZE'
-            p[0] = p[1]
-
-        def p_size_definition_refined (p) :
-            'size_definition : SIZE LPAREN SIZE_MOD RPAREN'
-            p[0] = p[1] + " (" + p[3] + ")"
+            '''
+            size_definition : SIZE LPAREN SIZE_MOD RPAREN
+                | SIZE
+            '''
+            if len(p) == 5:
+                p[0] = p[1] + " (" + p[3] + ")"
+            else:
+                p[0] = p[1]
 
         def p_type_definition (p) :
-            'type_definition : CREATURE_TYPE'
-            p[0] = {'primary' : p[1], 'subtypes' : []}
-
-        def p_type_definition_subs (p) :
-            'type_definition : CREATURE_TYPE LPAREN wordlist RPAREN'
-            p[0] = {'primary' : p[1], 'subtypes' : p[3]}
-
-        def p_wordlist_list (p):
-            'wordlist : wordlist COMMA words'
-            p[0] = p[1]
-            p[0].append(p[3])
+            '''
+            type_definition :  CREATURE_TYPE LPAREN wordlist RPAREN
+                | CREATURE_TYPE
+            '''
+            if len(p) == 5:
+                p[0] = {'primary' : p[1], 'subtypes' : p[3]}
+            else :
+                p[0] = {'primary' : p[1], 'subtypes' : []}
 
         def p_wordlist (p) :
-            'wordlist : words'
-            p[0] = [p[1]]
+            '''
+            wordlist : wordlist COMMA words
+                |  words
+            '''
+            if len(p) == 4:
+                p[0] = p[1]
+                p[0].append(p[3])
+            else:
+                p[0] = [p[1]]
 
         def p_words (p) :
-            'words : WORD'
-            p[0] = p[1]
+            '''
+            words : words WORD
+                | WORD
+            '''
+            if len(p) == 3:
+                p[0] = p[1] + " " + p[2]
+            else :
+                p[0] = p[1]
 
-        def p_words_multiple (p):
-            'words : words WORD'
-            p[0] = p[1] + " " + p[2]
+        def p_dice_definition (p):
+            '''
+            dice_definition : NUMBER D NUMBER
+                | D NUMBER
+            '''
+            if len(p) == 4:
+                p[0] = p[1] + "d" + p[3]
+            else :
+                p[0] = "1d" + p[2]
 
-        """def p_dice_definition (p):
-            'dice_definition : NUMBER D NUMBER'
-            if (p[1] <= 5):
-                p[0] = dice(p[1], p[3])
-            else:
-                raise Exception("too many dice!")
-
-        def p_single_dice_definition (p):
-            'dice_definition : D NUMBER'
-            p[0] = dice(1, p[2])
-
-        def p_target_definition (p):
-            'target_definition : optional_whitespace VERSUS optional_whitespace NUMBER'
-            p[0] = p[4]
-
-        def p_optional_whitespace (p):
-            'optional_whitespace : WHITESPACE'
-
-        def p_optional_whitespace_blank (p):
-            'optional_whitespace : '
-        """
-
+        # error rule
         def p_error (p):
             print "syntax error in input!"
             self.error = True
