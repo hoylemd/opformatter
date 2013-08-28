@@ -8,10 +8,8 @@ class Parser:
             'obsidianFormat : name statlist'
 
         def p_statlist_recursive (p):
-            'statlist : statlist stat'
-
-        def p_statlist_single (p):
-            'statlist : stat'
+            '''statlist : statlist stat
+                        | stat'''
 
         def p_stat_eol (p):
             'stat : stat EOL'
