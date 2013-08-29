@@ -171,8 +171,12 @@ class Parser:
         # error rule
         def p_error (p):
             print "syntax error in input!"
+            print str(p) + " << current token"
+
+            for tok in lex.lexer:
+                print str(tok)
+
             self.error = True
-            print p
 
         self.error = False;
         self.lexer = lex.lexer
@@ -184,5 +188,6 @@ class Parser:
         self.character = character();
 
     def parse(self, s):
+
         result = self.parser.parse(s, lexer=self.lexer)
         return result
