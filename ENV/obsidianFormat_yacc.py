@@ -6,7 +6,13 @@ class Parser:
     def __init__(self, lex):
         def p_obsidianFormat (p):
             '''
-            obsidianFormat : block
+            obsidianFormat : blocks
+            '''
+
+        def p_blocks (p):
+            '''
+            blocks : blocks block
+                | block
             '''
 
         def p_block (p):
