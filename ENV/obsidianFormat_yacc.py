@@ -5,7 +5,14 @@ class Parser:
     # error rule
     def __init__(self, lex):
         def p_obsidianFormat (p):
-            'obsidianFormat : name statlist'
+            '''
+            obsidianFormat : overview
+            '''
+
+        def p_overview (p):
+            '''
+            overview : name statlist
+            '''
 
         def p_statlist (p):
             '''statlist : statlist stat
