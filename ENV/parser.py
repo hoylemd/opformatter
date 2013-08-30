@@ -134,8 +134,27 @@ class Parser:
 
         def p_defense_block (p):
             '''
-            defense_block : DEFENSE EOL
+            defense_block : DEFENSE EOL defenses
+		| DEFENSE defenses
             '''
+
+	def p_defenses (p):
+	    '''
+	    defenses : defenses defense
+		| defense
+	    '''
+
+	def p_defense (p):
+	    '''
+	    defense : defense EOL
+		| speed
+	    '''
+
+	def p_speed (p):
+	    '''
+	    speed : SPEED NUMBER FEET
+	    '''
+	    self.character.speed = p[2]
 
 
         # utility rules
