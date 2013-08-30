@@ -131,6 +131,8 @@ class Parser:
             '''
             self.character.senses = {p[2] : p[3]}
 
+        # utility rules
+
         def p_wordlist (p) :
             '''
             wordlist : wordlist COMMA words
@@ -179,7 +181,7 @@ class Parser:
 
         # error rule
         def p_error (p):
-            print "syntax error at token '" + p.value,
+            print "syntax error at token '" + str(p.value),
             print  "' at position " + str(find_column(p)) + ", line " + str(p.lineno)
 
             #print str(p) + " << current token"
