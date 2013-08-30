@@ -10,6 +10,10 @@ class Lexer:
             'Senses': 'SENSES',
         }
 
+        blocks = {
+            'DEFENSE' : 'DEFENSE',
+        }
+
         genders = ['Male', 'Female']
 
         classes = [
@@ -105,7 +109,7 @@ class Lexer:
             'SIZE_MOD',
             'CREATURE_TYPE',
 
-        ] + list(abbreviations.values())
+        ] + list(abbreviations.values()) + list(blocks.values())
 
         self.tokens = tokens
 
@@ -123,7 +127,13 @@ class Lexer:
         def t_WORD(t):
             r'[a-zA-Z]+'
             # Check for abbreviations words
-            t.type = abbreviations.get(t.value,'WORD')
+            if t.type == 'WORD':
+                t.type = abbreviations.get(t.value,'WORD')
+
+            # Check for blocks words
+            if t.type == 'WORD':
+                t.type = blocks.get(t.value,'WORD')
+
             if t.type == 'WORD':
                 if t.value in genders:
                     t.type = 'GENDER'
