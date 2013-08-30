@@ -8,9 +8,19 @@ class Lexer:
             'XP' : 'XP',
             'Init': 'INIT',
             'Senses': 'SENSES',
+	    'AC': 'AC',
 	    'Speed': 'SPEED',
 	    'feet': 'FEET',
         }
+
+	ability_abbreviations = {
+	    'Str' : 'STR',
+	    'Dex' : 'DEX',
+	    'Con' : 'CON',
+	    'Int' : 'INT',
+	    'Wis' : 'WIS',
+	    'Cha' : 'CHA'
+	}
 
         blocks = {
             'DEFENSE' : 'DEFENSE',
@@ -92,6 +102,17 @@ class Lexer:
             'long'
         ]
 
+	ac_types = [
+	    'touch',
+	    'flat-footed',
+	]
+
+	ac_source = [
+	    'armor',
+	    'shield',
+	    'natural'
+	]
+
         #token list
         tokens = [
             'EOL',
@@ -110,8 +131,9 @@ class Lexer:
             'SIZE',
             'SIZE_MOD',
             'CREATURE_TYPE',
-
-        ] + list(abbreviations.values()) + list(blocks.values())
+	    'AC_TYPE',
+        ] + list(abbreviations.values()) + list(blocks.values());
+	tokens += list(ability_abbreviations.values());
 
         self.tokens = tokens
 
@@ -127,10 +149,14 @@ class Lexer:
 
         #function to disambiguate special words
         def t_WORD(t):
-            r'[a-zA-Z]+'
+            r'[a-zA-Z\-]+'
             # Check for abbreviations words
             if t.type == 'WORD':
                 t.type = abbreviations.get(t.value,'WORD')
+
+            # Check for ability abbreviations words
+            if t.type == 'WORD':
+                t.type = ability_abbreviations.get(t.value,'WORD')
 
             # Check for blocks words
             if t.type == 'WORD':
@@ -149,6 +175,8 @@ class Lexer:
                     t.type = 'SIZE_MOD'
                 elif t.value in creature_types:
                     t.type = 'CREATURE_TYPE'
+                elif t.value in ac_types:
+                    t.type = 'AC_TYPE'
 
             return t
 
