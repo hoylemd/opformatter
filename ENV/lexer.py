@@ -8,6 +8,8 @@ class Lexer:
             'XP' : 'XP',
             'Init': 'INIT',
             'Senses': 'SENSES',
+	    'Speed': 'SPEED',
+	    'feet': 'FEET',
         }
 
         blocks = {
