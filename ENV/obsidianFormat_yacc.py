@@ -179,11 +179,12 @@ class Parser:
 
         # error rule
         def p_error (p):
-            print "syntax error at position " + str(find_column(p)) + ", line " + str(p.lineno)
-            print str(p) + " << current token"
+            print "syntax error at token '" + p.value,
+            print  "' at position " + str(find_column(p)) + ", line " + str(p.lineno)
 
-            for tok in lex.lexer:
-                print str(tok)
+            #print str(p) + " << current token"
+            #for tok in lex.lexer:
+            #    print str(tok)
 
             self.error = True
 
