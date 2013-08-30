@@ -3,3 +3,4 @@ XP 800
 Male human fighter 2/rogue 2
 NE Medium humanoid (human)
 Init +7; Senses Perception +1
+DEFENSE
