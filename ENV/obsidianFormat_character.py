@@ -19,6 +19,9 @@ class character:
         out += " " + self.creature_type_string() + "\n"
         out += "*Initiative* " + self.initiative_string() + "\n"
         out += "*Senses* " + self.senses_string() + "\n"
+        out += "\n"
+        out += "h3. Defense\n"
+
 
         return out;
 
