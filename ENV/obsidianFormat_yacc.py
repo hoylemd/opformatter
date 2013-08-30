@@ -18,6 +18,7 @@ class Parser:
         def p_block (p):
             '''
             block : overview
+                | defense_block
             '''
 
         def p_overview (p):
@@ -130,6 +131,12 @@ class Parser:
             senses : SENSES WORD modifier
             '''
             self.character.senses = {p[2] : p[3]}
+
+        def p_defense_block (p):
+            '''
+            defense_block : DEFENSE EOL
+            '''
+
 
         # utility rules
 
