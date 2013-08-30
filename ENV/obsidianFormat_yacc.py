@@ -168,9 +168,18 @@ class Parser:
             '''
             p[0] = p[2]
 
+        # Compute column.
+        # token is a token instance
+        def find_column(token):
+            last_cr = self.input.rfind('\n',0,token.lexpos)
+            if last_cr < 0:
+                last_cr = 0
+            column = (token.lexpos - last_cr) + 1
+            return column
+
         # error rule
         def p_error (p):
-            print "syntax error in input!"
+            print "syntax error at position " + str(find_column(p)) + ", line " + str(p.lineno)
             print str(p) + " << current token"
 
             for tok in lex.lexer:
@@ -188,6 +197,6 @@ class Parser:
         self.character = character();
 
     def parse(self, s):
-
+        self.input = s;
         result = self.parser.parse(s, lexer=self.lexer)
         return result
