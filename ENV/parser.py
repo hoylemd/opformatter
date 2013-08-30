@@ -147,8 +147,59 @@ class Parser:
 	def p_defense (p):
 	    '''
 	    defense : defense EOL
+		| ac_definition
 		| speed
 	    '''
+
+	def p_ac_definition (p):
+	    '''
+	    ac_definition : AC NUMBER COMMA alternate_acs ac_sources
+		| AC NUMBER
+	    '''
+	    self.character.ac = {"alternates" : p[1], "sources" : p[2]}
+
+	def p_alternate_acs (p):
+	    '''
+	    alternate_acs : alternate_acs COMMA alternate_ac
+		| alternate_ac
+		|
+	    '''
+	    if len(p) == 5:
+		p[0] = p[1] + [p[4]]
+	    elif len(p) == 2:
+		p[0] = [p[1]]
+	    else:
+		p[0] = []
+
+	def p_alternate_ac (p):
+	    '''
+	    alternate_ac : AC_TYPE NUMBER
+	    '''
+	    p[0] = {"type" : p[1], "value" : p[2]};
+
+	def p_ac_sources (p):
+	    '''
+	    ac_sources : LPAREN ac_source_list RPAREN
+		|
+	    '''
+	    p[0] = p[2];
+
+	def p_ac_source_list (p):
+	    '''
+	    ac_source_list : ac_source_list COMMA ac_source
+		| ac_source
+	    '''
+	    if len(p) == 4:
+		p[0] = p[1] + [p[3]]
+	    else:
+		p[0] = [p[1]]
+
+	def p_ac_source (p):
+	    '''
+	    ac_source : modifier words
+		| modifier DEX
+	    '''
+	    p[0] = { "name" : p[2], "value" : p[1] }
 
 	def p_speed (p):
 	    '''
@@ -207,7 +258,7 @@ class Parser:
 
         # error rule
         def p_error (p):
-            print "syntax error at token '" + str(p.value),
+            print "syntax error at " + str(p.type) + " token '" + str(p.value),
             print  "' at position " + str(find_column(p)) + ", line " + str(p.lineno)
 
             #print str(p) + " << current token"
