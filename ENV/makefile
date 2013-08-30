@@ -1,8 +1,7 @@
 testinput = testcase.txt
 testoutput = test.out
 testgold = test.gold
-prefix = obsidianFormat
-codefiles = main.py $(prefix)_lex.py $(prefix)_yacc.py $(prefix)_character.py
+codefiles = main.py lexer.py parser.py character.py
 runcommand = python main.py
 
 all : test

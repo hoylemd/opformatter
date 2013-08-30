@@ -1,4 +1,4 @@
-from obsidianFormat_character import character as character
+from character import character as character
 import ply.yacc as yacc
 
 class Parser:

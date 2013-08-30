@@ -1,5 +1,5 @@
-from obsidianFormat_lex import Lexer
-from obsidianFormat_yacc import Parser
+from lexer import Lexer
+from parser import Parser
 import fileinput
 
 if __name__ == "__main__":
