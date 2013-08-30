@@ -21,6 +21,7 @@ class character:
         out += "*Senses* " + self.senses_string() + "\n"
         out += "\n"
         out += "h3. Defense\n"
+        out += "*Speed* " + str(self.speed) + " ft.\n"
 
 
         return out;
