@@ -8,110 +8,103 @@ class Lexer:
             'XP' : 'XP',
             'Init': 'INIT',
             'Senses': 'SENSES',
-	    'AC': 'AC',
-	    'Speed': 'SPEED',
-	    'feet': 'FEET',
+            'AC': 'AC',
+            'Speed': 'SPEED',
+            'feet': 'FEET',
         }
 
-	ability_abbreviations = {
-	    'Str' : 'STR',
-	    'Dex' : 'DEX',
-	    'Con' : 'CON',
-	    'Int' : 'INT',
-	    'Wis' : 'WIS',
-	    'Cha' : 'CHA'
-	}
+        ability_abbreviations = {
+            'Str' : 'STR',
+            'Dex' : 'DEX',
+            'Con' : 'CON',
+            'Int' : 'INT',
+            'Wis' : 'WIS',
+            'Cha' : 'CHA'
+        }
 
         blocks = {
             'DEFENSE' : 'DEFENSE',
         }
 
-        genders = ['Male', 'Female']
-
-        classes = [
-            'barbarian',
-            'bard',
-            'cleric',
-            'druid',
-            'fighter',
-            'monk',
-            'paladin',
-            'ranger',
-            'rogue',
-            'sorcerer',
-            'wizard',
-            'arcane archer',
-            'arcane trickster',
-            'assassin',
-            'dragon disciple',
-            'eldrich knight',
-            'loremaster',
-            'mystic theurge',
-            'pathfinder chronicler',
-            'shadowdancer',
-            'adept',
-            'aristocrat',
-            'commoner',
-            'expert',
-            'warrior',
-        ]
-
-        creature_types = [
-            'abberation',
-            'animal',
-            'construct',
-            'dragon',
-            'fey',
-            'humanoid',
-            'magical beast',
-            'monstrous humanoid',
-            'ooze',
-            'outsider',
-            'plant',
-            'undead',
-            'vermin',
-        ]
-
-        alignments = [
-            'LG',
-            'NG',
-            'CG',
-            'LN',
-            'TN',
-            'NN',
-            'CN',
-            'LE',
-            'NE',
-            'CE',
-        ]
-
-        sizes = [
-            'Fine',
-            'Diminutive',
-            'Tiny',
-            'Small',
-            'Medium',
-            'Large',
-            'Huge',
-            'Gargantual',
-            'Colossal',
-        ]
-
-        size_modifiers = [
-            'tall',
-            'long'
-        ]
-
-	ac_types = [
-	    'touch',
-	    'flat-footed',
-	]
-
-	ac_source = [
-	    'armor',
-	    'shield',
-	    'natural'
-	]
+        special_words = {
+            "GENDER" : [
+                'Male',
+                'Female',
+            ],
+            "CLASS" : [
+                'barbarian',
+                'bard',
+                'cleric',
+                'druid',
+                'fighter',
+                'monk',
+                'paladin',
+                'ranger',
+                'rogue',
+                'sorcerer',
+                'wizard',
+                'arcane archer',
+                'arcane trickster',
+                'assassin',
+                'dragon disciple',
+                'eldrich knight',
+                'loremaster',
+                'mystic theurge',
+                'pathfinder chronicler',
+                'shadowdancer',
+                'adept',
+                'aristocrat',
+                'commoner',
+                'expert',
+                'warrior',
+            ],
+            "CREATURE_TYPE" : [
+                'abberation',
+                'animal',
+                'construct',
+                'dragon',
+                'fey',
+                'humanoid',
+                'magical beast',
+                'monstrous humanoid',
+                'ooze',
+                'outsider',
+                'plant',
+                'undead',
+                'vermin',
+            ],
+            "ALIGNMENT" : [
+                'LG',
+                'NG',
+                'CG',
+                'LN',
+                'TN',
+                'NN',
+                'CN',
+                'LE',
+                'NE',
+                'CE',
+            ],
+            "SIZE" : [
+                'Fine',
+                'Diminutive',
+                'Tiny',
+                'Small',
+                'Medium',
+                'Large',
+                'Huge',
+                'Gargantual',
+                'Colossal',
+            ],
+            "SIZE_MOD" : [
+                'tall',
+                'long'
+            ],
+            "AC_TYPE" : [
+                'touch',
+                'flat-footed',
+            ],
+        }
 
         #token list
         tokens = [
@@ -125,15 +118,8 @@ class Lexer:
             'NUMBER',
             'D',
             'WORD',
-            'GENDER',
-            'CLASS',
-            'ALIGNMENT',
-            'SIZE',
-            'SIZE_MOD',
-            'CREATURE_TYPE',
-	    'AC_TYPE',
         ] + list(abbreviations.values()) + list(blocks.values());
-	tokens += list(ability_abbreviations.values());
+        tokens += list(ability_abbreviations.values()) + list(special_words.keys());
 
         self.tokens = tokens
 
@@ -163,21 +149,10 @@ class Lexer:
                 t.type = blocks.get(t.value,'WORD')
 
             if t.type == 'WORD':
-                if t.value in genders:
-                    t.type = 'GENDER'
-                elif t.value in classes:
-                    t.type = 'CLASS'
-                elif t.value in alignments:
-                    t.type = 'ALIGNMENT'
-                elif t.value in sizes:
-                    t.type = 'SIZE'
-                elif t.value in size_modifiers:
-                    t.type = 'SIZE_MOD'
-                elif t.value in creature_types:
-                    t.type = 'CREATURE_TYPE'
-                elif t.value in ac_types:
-                    t.type = 'AC_TYPE'
-
+                for special in special_words:
+                    if t.value in special_words[special]:
+                        t.type = special
+                        break;
             return t
 
         # Regex rule w/ action code
