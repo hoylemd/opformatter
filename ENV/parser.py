@@ -148,6 +148,7 @@ class Parser:
 	    '''
 	    defense : defense EOL
 		| ac_definition
+		| hp_definition
 		| speed
 	    '''
 
@@ -201,6 +202,35 @@ class Parser:
 	    '''
 	    p[0] = { "name" : p[2], "value" : p[1] }
 
+	def p_hp_definition (p):
+	    '''
+	    hp_definition : HP NUMBER
+	    '''
+	    self.character.hp = p[2]
+
+	def p_hit_dice_definition (p):
+	    '''
+	    hit_dice_definition : LPAREN NUMBER HD SEMICOLON hit_dice_list modifier RPAREN
+		| LPAREN hit_dice_list modifier RPAREN
+		|
+	    '''
+	    if len(p) == 8:
+		return p[5]
+	    elif len(p) == 5:
+		return p[2]
+	    else:
+		return []
+
+	def p_hit_dice_list (p):
+	    '''
+	    hit_dice_list : hit_dice_list PLUS dice_definition
+		| dice_definition
+	    '''
+	    if len(p) == 4:
+		return p[1] + [p[3]]
+	    elif len(p) == 2:
+		return [p[1]]
+
 	def p_speed (p):
 	    '''
 	    speed : SPEED NUMBER FEET
@@ -234,12 +264,8 @@ class Parser:
         def p_dice_definition (p):
             '''
             dice_definition : NUMBER D NUMBER
-                | D NUMBER
             '''
-            if len(p) == 4:
-                p[0] = p[1] + "d" + p[3]
-            else :
-                p[0] = "1d" + p[2]
+	    p[0] = p[1] + "d" + p[3]
 
         def p_modifier (p):
             '''
