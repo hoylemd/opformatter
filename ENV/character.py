@@ -21,6 +21,7 @@ class character:
         out += "*Senses* " + self.senses_string() + "\n"
         out += "\n"
         out += "h3. Defense\n"
+        out += "*AC* " + str(self.ac_string()) + "\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
 
 
@@ -85,3 +86,25 @@ class character:
             out += sense + " " + modifier_string(self.senses[sense])
 
         return out
+
+    def ac_string(self):
+        # build the alternate ac string
+        alts = ""
+        for ac in self.ac["alternates"]:
+            alts += " / " +  ac["type"] + " " + str(ac["value"])
+
+        # builld the components string, and calculate the total ac
+        total_ac = 10;
+        components = "";
+        for component in self.ac["sources"]:
+            total_ac += component["value"]
+            if components != "":
+                components += ", "
+            else:
+                components += "("
+            components += modifier_string(component["value"]) + " " + component["name"]
+        if len(components) > 0:
+            components +=")"
+
+        return str(total_ac) + alts + " " + components
+
