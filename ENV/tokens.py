@@ -4,6 +4,8 @@ abbreviations = {
     'Init': 'INIT',
     'Senses': 'SENSES',
     'AC': 'AC',
+    'hp': 'HP',
+    'HD': 'HD',
     'Speed': 'SPEED',
     'feet': 'FEET',
 }
