@@ -156,7 +156,7 @@ class Parser:
 	    ac_definition : AC NUMBER COMMA alternate_acs ac_sources
 		| AC NUMBER
 	    '''
-	    self.character.ac = {"alternates" : p[1], "sources" : p[2]}
+	    self.character.ac = {"alternates" : p[4], "sources" : p[5]}
 
 	def p_alternate_acs (p):
 	    '''
@@ -164,8 +164,8 @@ class Parser:
 		| alternate_ac
 		|
 	    '''
-	    if len(p) == 5:
-		p[0] = p[1] + [p[4]]
+	    if len(p) == 4:
+		p[0] = p[1] + [p[3]]
 	    elif len(p) == 2:
 		p[0] = [p[1]]
 	    else:
