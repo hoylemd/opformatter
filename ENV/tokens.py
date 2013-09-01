@@ -7,6 +7,10 @@ abbreviations = {
     'hp': 'HP',
     'HD': 'HD',
     'd': 'D',
+    'Fort' : 'FORT',
+    'Ref' : 'REF',
+    'Will' : 'WILL',
+    'vs.' : 'VS',
     'Speed': 'SPEED',
     'feet': 'FEET',
 }

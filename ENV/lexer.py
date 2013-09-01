@@ -18,7 +18,7 @@ class Lexer:
 
         #function to disambiguate special words
         def t_WORD(t):
-            r'[a-zA-Z\-]+'
+            r'[a-zA-Z\-\.]+'
             # Check for abbreviations words
             if t.type == 'WORD':
                 t.type = abbreviations.get(t.value,'WORD')
