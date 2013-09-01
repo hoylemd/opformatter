@@ -6,6 +6,7 @@ abbreviations = {
     'AC': 'AC',
     'hp': 'HP',
     'HD': 'HD',
+    'd': 'D',
     'Speed': 'SPEED',
     'feet': 'FEET',
 }
@@ -113,7 +114,6 @@ tokens = [
     'PLUS',
     'SEMICOLON',
     'NUMBER',
-    'D',
     'WORD',
 ] + list(abbreviations.values()) + list(blocks.values());
 tokens += list(ability_abbreviations.values()) + list(special_words.keys());

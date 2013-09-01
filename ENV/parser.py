@@ -204,7 +204,7 @@ class Parser:
 
 	def p_hp_definition (p):
 	    '''
-	    hp_definition : HP NUMBER
+	    hp_definition : HP NUMBER hit_dice_definition
 	    '''
 	    self.character.hp = p[2]
 
@@ -227,9 +227,9 @@ class Parser:
 		| dice_definition
 	    '''
 	    if len(p) == 4:
-		return p[1] + [p[3]]
+		p[0] = p[1] + [p[3]]
 	    elif len(p) == 2:
-		return [p[1]]
+		p[0] = [p[1]]
 
 	def p_speed (p):
 	    '''
@@ -265,7 +265,7 @@ class Parser:
             '''
             dice_definition : NUMBER D NUMBER
             '''
-	    p[0] = p[1] + "d" + p[3]
+	    p[0] = str(p[1]) + "d" + str(p[3])
 
         def p_modifier (p):
             '''
