@@ -135,102 +135,142 @@ class Parser:
         def p_defense_block (p):
             '''
             defense_block : DEFENSE EOL defenses
-		| DEFENSE defenses
+                | DEFENSE defenses
             '''
 
-	def p_defenses (p):
-	    '''
-	    defenses : defenses defense
-		| defense
-	    '''
+        def p_defenses (p):
+            '''
+            defenses : defenses defense
+                | defense
+            '''
 
-	def p_defense (p):
-	    '''
-	    defense : defense EOL
-		| ac_definition
-		| hp_definition
-		| speed
-	    '''
+        def p_defense (p):
+            '''
+            defense : defense EOL
+                | ac_definition
+                | hp_definition
+                | saves_definition
+                | speed
+            '''
 
-	def p_ac_definition (p):
-	    '''
-	    ac_definition : AC NUMBER COMMA alternate_acs ac_sources
-		| AC NUMBER
-	    '''
-	    self.character.ac = {"alternates" : p[4], "sources" : p[5]}
+        def p_ac_definition (p):
+            '''
+            ac_definition : AC NUMBER COMMA alternate_acs ac_sources
+                | AC NUMBER
+            '''
+            self.character.ac = {"alternates" : p[4], "sources" : p[5]}
 
-	def p_alternate_acs (p):
-	    '''
-	    alternate_acs : alternate_acs COMMA alternate_ac
-		| alternate_ac
-		|
-	    '''
-	    if len(p) == 4:
-		p[0] = p[1] + [p[3]]
-	    elif len(p) == 2:
-		p[0] = [p[1]]
-	    else:
-		p[0] = []
+        def p_alternate_acs (p):
+            '''
+            alternate_acs : alternate_acs COMMA alternate_ac
+                | alternate_ac
+                |
+            '''
+            if len(p) == 4:
+                p[0] = p[1] + [p[3]]
+            elif len(p) == 2:
+                p[0] = [p[1]]
+            else:
+                p[0] = []
 
-	def p_alternate_ac (p):
-	    '''
-	    alternate_ac : AC_TYPE NUMBER
-	    '''
-	    p[0] = {"type" : p[1], "value" : p[2]};
+        def p_alternate_ac (p):
+            '''
+            alternate_ac : AC_TYPE NUMBER
+            '''
+            p[0] = {"type" : p[1], "value" : p[2]};
 
-	def p_ac_sources (p):
-	    '''
-	    ac_sources : LPAREN ac_source_list RPAREN
-		|
-	    '''
-	    p[0] = p[2];
+        def p_ac_sources (p):
+            '''
+            ac_sources : LPAREN ac_source_list RPAREN
+                |
+            '''
+            p[0] = p[2];
 
-	def p_ac_source_list (p):
-	    '''
-	    ac_source_list : ac_source_list COMMA ac_source
-		| ac_source
-	    '''
-	    if len(p) == 4:
-		p[0] = p[1] + [p[3]]
-	    else:
-		p[0] = [p[1]]
+        def p_ac_source_list (p):
+            '''
+            ac_source_list : ac_source_list COMMA ac_source
+                | ac_source
+            '''
+            if len(p) == 4:
+                p[0] = p[1] + [p[3]]
+            else:
+                p[0] = [p[1]]
 
-	def p_ac_source (p):
-	    '''
-	    ac_source : modifier words
-		| modifier DEX
-	    '''
-	    p[0] = { "name" : p[2], "value" : p[1] }
+        def p_ac_source (p):
+            '''
+            ac_source : modifier words
+                | modifier DEX
+            '''
+            p[0] = { "name" : p[2], "value" : p[1] }
 
-	def p_hp_definition (p):
-	    '''
-	    hp_definition : HP NUMBER hit_dice_definition
-	    '''
-	    self.character.hp = p[2]
+        def p_hp_definition (p):
+            '''
+            hp_definition : HP NUMBER hit_dice_definition
+            '''
+            self.character.hp = p[2]
 
-	def p_hit_dice_definition (p):
-	    '''
-	    hit_dice_definition : LPAREN NUMBER HD SEMICOLON hit_dice_list modifier RPAREN
-	    '''
-	    self.character.hit_dice = p[2]
-	    self.character.hit_dice_list = p[5]
-	    self.character.hp_modifier = p[6]
+        def p_hit_dice_definition (p):
+            '''
+            hit_dice_definition : LPAREN NUMBER HD SEMICOLON hit_dice_list modifier RPAREN
+            '''
+            self.character.hit_dice = p[2]
+            self.character.hit_dice_list = p[5]
+            self.character.hp_modifier = p[6]
 
-	def p_hit_dice_list (p):
-	    '''
-	    hit_dice_list : hit_dice_list PLUS dice_definition
-		| dice_definition
-	    '''
-	    if len(p) == 4:
-		p[0] = p[1] + [p[3]]
-	    elif len(p) == 2:
-		p[0] = [p[1]]
+        def p_hit_dice_list (p):
+            '''
+            hit_dice_list : hit_dice_list PLUS dice_definition
+                | dice_definition
+            '''
+            if len(p) == 4:
+                p[0] = p[1] + [p[3]]
+            elif len(p) == 2:
+                p[0] = [p[1]]
 
-	def p_speed (p):
-	    '''
-	    speed : SPEED NUMBER FEET
-	    '''
-	    self.character.speed = p[2]
+        def p_saves_definition (p):
+            '''
+            saves_definition : saves_list SEMICOLON special_saves
+            '''
+            self.character.saves = p[1]
+            self.character.save_modifiers = p[3]
+
+        def p_saves_list (p):
+            '''
+            saves_list : saves_list COMMA save
+                | save
+            '''
+            if len(p) == 4:
+                p[0] = dict(p[1].items() + p[3].items())
+            else:
+                p[0] = p[1]
+
+        def p_save (p):
+            '''
+            save : SAVING_THROW modifier
+            '''
+            p[0] = {p[1]: p[2]}
+
+        def p_special_saves (p):
+            '''
+            special_saves : special_saves COMMA special_save
+                | special_save
+            '''
+            if len(p) == 4:
+                p[0] =  dict(p[1].items() + p[3].items())
+            else :
+                p[0] = p[1]
+
+        def p_special_save (p):
+            '''
+            special_save : modifier VS words
+            '''
+            p[0] = {p[3] : p[1]}
+
+        def p_speed (p):
+            '''
+            speed : SPEED NUMBER FEET
+            '''
+            self.character.speed = p[2]
 
 
         # utility rules
@@ -260,7 +300,7 @@ class Parser:
             '''
             dice_definition : NUMBER D NUMBER
             '''
-	    p[0] = str(p[1]) + "d" + str(p[3])
+            p[0] = str(p[1]) + "d" + str(p[3])
 
         def p_modifier (p):
             '''
