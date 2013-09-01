@@ -262,7 +262,7 @@ class Parser:
 
         def p_special_save (p):
             '''
-            special_save : modifier VS words
+            special_save : modifier VS WORD
             '''
             p[0] = {p[3] : p[1]}
 
