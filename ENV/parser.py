@@ -211,15 +211,10 @@ class Parser:
 	def p_hit_dice_definition (p):
 	    '''
 	    hit_dice_definition : LPAREN NUMBER HD SEMICOLON hit_dice_list modifier RPAREN
-		| LPAREN hit_dice_list modifier RPAREN
-		|
 	    '''
-	    if len(p) == 8:
-		return p[5]
-	    elif len(p) == 5:
-		return p[2]
-	    else:
-		return []
+	    self.character.hit_dice = p[2]
+	    self.character.hit_dice_list = p[5]
+	    self.character.hp_modifier = p[6]
 
 	def p_hit_dice_list (p):
 	    '''
