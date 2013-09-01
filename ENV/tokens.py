@@ -7,9 +7,6 @@ abbreviations = {
     'hp': 'HP',
     'HD': 'HD',
     'd': 'D',
-    'Fort' : 'FORT',
-    'Ref' : 'REF',
-    'Will' : 'WILL',
     'vs.' : 'VS',
     'Speed': 'SPEED',
     'feet': 'FEET',
@@ -105,6 +102,11 @@ special_words = {
     "AC_TYPE" : [
         'touch',
         'flat-footed',
+    ],
+    "SAVING_THROW" : [
+        'Fort',
+        'Ref',
+        'Will',
     ],
 }
 
