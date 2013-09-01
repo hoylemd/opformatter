@@ -21,7 +21,8 @@ class character:
         out += "*Senses* " + self.senses_string() + "\n"
         out += "\n"
         out += "h3. Defense\n"
-        out += "*AC* " + str(self.ac_string()) + "\n"
+        out += "*AC* " + self.ac_string() + "\n"
+        out += "*HP* " + self.hp_string() + "\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
 
 
@@ -108,3 +109,18 @@ class character:
 
         return str(total_ac) + alts + " " + components
 
+    def hp_string(self):
+        out = str(self.hp) + " "
+
+        if (self.hit_dice):
+            out += "("
+            out += str(self.hit_dice) + " HD"
+            dice_string = ""
+            for dice in self.hit_dice_list:
+                if (dice_string != ""):
+                    dice_string += " +"
+                dice_string += " " + dice
+            out += dice_string  + " " + modifier_string(self.hp_modifier)
+            out += ")"
+
+        return out
