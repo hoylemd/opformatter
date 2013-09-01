@@ -23,6 +23,7 @@ class character:
         out += "h3. Defense\n"
         out += "*AC* " + self.ac_string() + "\n"
         out += "*HP* " + self.hp_string() + "\n"
+        out += self.saves_string() + "\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
 
 
@@ -124,3 +125,22 @@ class character:
             out += ")"
 
         return out
+
+    def saves_string(self):
+        out = ""
+        out += "*Fort* " + modifier_string(self.saves["Fort"]) + ", ";
+        out += "*Ref* " + modifier_string(self.saves["Ref"]) + ", ";
+        out += "*Will* " + modifier_string(self.saves["Will"]);
+
+        if len(self.save_modifiers) > 0:
+            out += " ("
+            specials = ""
+            for special in self.save_modifiers:
+                if specials != "":
+                    specials += ", "
+                specials += modifier_string(self.save_modifiers[special]) + " vs. " + special
+            out += specials + ")"
+
+        return out
+
+
