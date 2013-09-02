@@ -25,6 +25,10 @@ ability_abbreviations = {
     'Cha' : 'CHA',
 }
 
+conjunctions = {
+    'or' : 'OR',
+}
+
 blocks = {
     'DEFENSE' : 'DEFENSE',
     'OFFENSE' : 'OFFENSE',
@@ -128,10 +132,10 @@ tokens = [
     'PLUS',
     'TIMES',
     'SEMICOLON',
-    'OR',
     'NUMBER',
     'WORD',
-] + list(abbreviations.values()) + list(blocks.values());
-tokens += list(ability_abbreviations.values()) + list(special_words.keys());
+] + list(abbreviations.values()) + list(blocks.values()) + list(ability_abbreviations.values())
+
+tokens += list(conjunctions.values()) + list(special_words.keys())
 
 
