@@ -25,6 +25,10 @@ class Lexer:
             if t.type == 'WORD':
                 t.type = abbreviations.get(t.value,'WORD')
 
+            # Check for abbreviations words
+            if t.type == 'WORD':
+                t.type = conjunctions.get(t.value,'WORD')
+
             # Check for ability abbreviations words
             if t.type == 'WORD':
                 t.type = ability_abbreviations.get(t.value,'WORD')
@@ -67,4 +71,3 @@ class Lexer:
         self.lexer.input(input_string);
         for tok in self.lexer:
             print tok
-
