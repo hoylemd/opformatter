@@ -154,12 +154,6 @@ class Parser:
                 | defensive_abilities
             '''
 
-        def p_offense (p):
-            '''
-            offense : offense EOL
-                | speed
-            '''
-
         def p_ac_definition (p):
             '''
             ac_definition : AC NUMBER COMMA alternate_acs ac_sources
@@ -315,6 +309,7 @@ class Parser:
             '''
             offense : offense EOL
                 | speed
+                | melee_definition
             '''
 
         def p_speed (p):
@@ -323,6 +318,40 @@ class Parser:
             '''
             self.character.speed = p[2]
 
+        def p_melee_definition (p):
+            '''
+            melee_definition : MELEE melee_attacks
+            '''
+            self.character.melee_attacks = p[2]
+
+
+        def p_melee_attacks (p):
+            '''
+            melee_attacks : melee_attack
+            '''
+            p[0] = p[1]
+
+        def p_melee_attack (p):
+            '''
+            melee_attack : words modifier damage_specification
+            '''
+            p[0] = {p[1]: {"attack bonus" : p[2], "damage" : p[3]}}
+
+        def p_damage_specification (p):
+            '''
+            damage_specification : LPAREN dice_definition damage_type modifier RPAREN
+            '''
+            p[0] = {"roll" : p[2], "type" : p[3], "modifier" : p[4]}
+
+        def p_damage_type (p):
+            '''
+            damage_type : DAMAGE_TYPE
+                |
+            '''
+            if len(p) == 2:
+                p[0] = p[1]
+            else :
+                p[0] = ""
 
         # utility rules
 
