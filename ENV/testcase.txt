@@ -10,4 +10,5 @@ Fort +5, Ref +6, Will +3; +1 vs. fear
 Defensive Abilities bravery +1, evasion
 OFFENSE
 Speed 30 feet
+Melee whip +6 (1d3 nonlethal+2)
 
