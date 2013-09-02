@@ -1,3 +1,4 @@
+#coding: utf-8
 abbreviations = {
     'CR' : 'CR',
     'XP' : 'XP',
@@ -21,7 +22,7 @@ ability_abbreviations = {
     'Con' : 'CON',
     'Int' : 'INT',
     'Wis' : 'WIS',
-    'Cha' : 'CHA'
+    'Cha' : 'CHA',
 }
 
 blocks = {
@@ -125,7 +126,9 @@ tokens = [
     'RPAREN',
     'COMMA',
     'PLUS',
+    'TIMES',
     'SEMICOLON',
+    'OR',
     'NUMBER',
     'WORD',
 ] + list(abbreviations.values()) + list(blocks.values());
