@@ -19,6 +19,7 @@ class Parser:
             '''
             block : overview
                 | defense_block
+                | offense_block
             '''
 
         def p_overview (p):
@@ -151,6 +152,11 @@ class Parser:
                 | hp_definition
                 | saves_definition
                 | defensive_abilities
+            '''
+
+        def p_offense (p):
+            '''
+            offense : offense EOL
                 | speed
             '''
 
@@ -293,6 +299,23 @@ class Parser:
             else:
                 p[0] = { p[1]  : None}
 
+        def p_offense_block (p):
+            '''
+            offense_block : OFFENSE EOL offenses
+                | OFFENSE offenses
+            '''
+
+        def p_offenses (p):
+            '''
+            offenses : offenses offense
+                | offense
+            '''
+
+        def p_offense (p):
+            '''
+            offense : offense EOL
+                | speed
+            '''
 
         def p_speed (p):
             '''

@@ -25,6 +25,7 @@ ability_abbreviations = {
 
 blocks = {
     'DEFENSE' : 'DEFENSE',
+    'OFFENSE' : 'OFFENSE',
 }
 
 special_words = {

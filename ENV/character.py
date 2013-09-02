@@ -25,6 +25,8 @@ class character:
         out += "*HP* " + self.hp_string() + "\n"
         out += self.saves_string() + "\n"
         out += self.defensive_abilities_string() + "\n"
+        out += "\n"
+        out += "h3. Offense\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
 
 
