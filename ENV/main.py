@@ -11,7 +11,6 @@ if __name__ == "__main__":
 
     input_string = "".join(lines)
 
-    #lexer.readTokens(input_string)
     parser = Parser(Lexer())
 
     parser.parse(input_string)
