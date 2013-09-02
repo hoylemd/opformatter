@@ -405,15 +405,12 @@ class Parser:
         def p_error (p):
             print "syntax error at " + str(p.type) + " token '" + str(p.value),
             print  "' at position " + str(find_column(p)) + ", line " + str(p.lineno)
-
-            #print str(p) + " << current token"
-            #for tok in lex.lexer:
-            #    print str(tok)
+            #self.lex.readTokens(self.input)
 
             self.error = True
 
         self.error = False;
-        self.lexer = lex.lexer
+        self.lex = lex
 
         tokens = lex.tokens
 
@@ -423,5 +420,5 @@ class Parser:
 
     def parse(self, s):
         self.input = s;
-        result = self.parser.parse(s, lexer=self.lexer)
+        result = self.parser.parse(s, lexer=self.lex.lexer)
         return result
