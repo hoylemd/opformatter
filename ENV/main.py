@@ -1,3 +1,4 @@
+# coding: utf-8
 from lexer import Lexer
 from parser import Parser
 import fileinput
@@ -10,7 +11,6 @@ if __name__ == "__main__":
 
     input_string = "".join(lines)
 
-    lexer = Lexer()
     #lexer.readTokens(input_string)
     parser = Parser(Lexer())
 
