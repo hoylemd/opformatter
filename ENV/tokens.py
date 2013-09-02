@@ -12,6 +12,7 @@ abbreviations = {
     'Abilities' : 'ABILITIES',
     'Speed': 'SPEED',
     'feet': 'FEET',
+    'Melee': 'MELEE',
 }
 
 ability_abbreviations = {
@@ -110,6 +111,9 @@ special_words = {
         'Fort',
         'Ref',
         'Will',
+    ],
+    "DAMAGE_TYPE" : [
+        'nonlethal',
     ],
 }
 
