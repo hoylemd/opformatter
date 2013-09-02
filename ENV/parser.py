@@ -150,6 +150,7 @@ class Parser:
                 | ac_definition
                 | hp_definition
                 | saves_definition
+                | defensive_abilities
                 | speed
             '''
 
@@ -256,7 +257,7 @@ class Parser:
                 | special_save
             '''
             if len(p) == 4:
-                p[0] =  dict(p[1].items() + p[3].items())
+                p[0] = dict(p[3].items() + p[1].items())
             else :
                 p[0] = p[1]
 
@@ -265,6 +266,33 @@ class Parser:
             special_save : modifier VS WORD
             '''
             p[0] = {p[3] : p[1]}
+
+        def p_defensive_abilities (p):
+            '''
+            defensive_abilities : DEFENSIVE ABILITIES def_abilities_list
+            '''
+            self.character.defensive_abilities = p[3]
+
+        def p_def_abilities_list (p):
+            '''
+            def_abilities_list : def_abilities_list COMMA defensive_ability
+                | defensive_ability
+            '''
+            if len(p) == 4:
+                p[0] = dict(p[3].items() + p[1].items())
+            else:
+                p[0] = p[1]
+
+        def p_defensive_ability (p):
+            '''
+            defensive_ability : WORD modifier
+                | WORD
+            '''
+            if len(p) == 3:
+                p[0] = { p[1]  : p[2]}
+            else:
+                p[0] = { p[1]  : None}
+
 
         def p_speed (p):
             '''
