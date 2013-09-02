@@ -8,6 +8,8 @@ abbreviations = {
     'HD': 'HD',
     'd': 'D',
     'vs.' : 'VS',
+    'Defensive' : 'DEFENSIVE',
+    'Abilities' : 'ABILITIES',
     'Speed': 'SPEED',
     'feet': 'FEET',
 }
