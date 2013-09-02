@@ -1,12 +1,22 @@
 def modifier_string(modifier):
-        out = ""
+    out = ""
 
-        if modifier > 0:
-            out += "+"
+    if modifier > 0:
+        out += "+"
 
-        out += str(modifier);
+    out += str(modifier);
 
-        return out
+    return out
+
+def attack_string(attack):
+    out = modifier_string(attack["attack bonus"]) + " ("
+    out += attack["roll"]
+    if len(attack["type"]) > 0:
+        out += " " + attack["type"]
+    if attack["modifier"] != 0:
+        out += modifier_string(attack["modifier"])
+    out += ")"
+    return out
 
 class character:
     def output(self):
@@ -28,7 +38,7 @@ class character:
         out += "\n"
         out += "h3. Offense\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
-
+        out += self.attacks_string() + "\n"
 
         return out;
 
@@ -162,3 +172,11 @@ class character:
 
         return out
 
+    def attacks_string(self):
+        out = ""
+        if len(self.melee_attacks) > 0:
+            out += "*Melee* "
+            for atk in self.melee_attacks:
+                out += atk + " " + attack_string(self.melee_attacks[atk])
+
+        return out
