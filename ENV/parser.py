@@ -328,7 +328,8 @@ class Parser:
 
         def p_melee_attacks (p):
             '''
-            melee_attacks : melee_attack
+            melee_attacks : melee_attacks OR EOL melee_attack
+                | melee_attack
             '''
             p[0] = p[1]
 
