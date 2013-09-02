@@ -257,7 +257,7 @@ class Parser:
                 | special_save
             '''
             if len(p) == 4:
-                p[0] = dict(p[1].items() + p[3].items())
+                p[0] = dict(p[3].items() + p[1].items())
             else :
                 p[0] = p[1]
 
@@ -279,7 +279,7 @@ class Parser:
                 | defensive_ability
             '''
             if len(p) == 4:
-                p[0] = dict(p[1].items() + p[3].items())
+                p[0] = dict(p[3].items() + p[1].items())
             else:
                 p[0] = p[1]
 

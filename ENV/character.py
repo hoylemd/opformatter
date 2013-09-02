@@ -24,6 +24,7 @@ class character:
         out += "*AC* " + self.ac_string() + "\n"
         out += "*HP* " + self.hp_string() + "\n"
         out += self.saves_string() + "\n"
+        out += self.defensive_abilities_string() + "\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
 
 
@@ -143,4 +144,19 @@ class character:
 
         return out
 
+    def defensive_abilities_string(self):
+        out = ""
+        if len(self.defensive_abilities) > 0:
+            abilities = ""
+            for ability in self.defensive_abilities:
+                if abilities != "":
+                    abilities += ", "
+                abilities += ability
+                val = self.defensive_abilities[ability];
+                if (val):
+                    abilities += " " + modifier_string(val)
+
+            out += "*Defensive Abilities* " + abilities
+
+        return out
 
