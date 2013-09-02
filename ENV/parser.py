@@ -335,7 +335,9 @@ class Parser:
             '''
             melee_attack : words modifier damage_specification
             '''
-            p[0] = {p[1]: {"attack bonus" : p[2], "damage" : p[3]}}
+            full_attack_spec = p[3]
+            full_attack_spec["attack bonus"] = p[2]
+            p[0] = {p[1]: full_attack_spec}
 
         def p_damage_specification (p):
             '''
