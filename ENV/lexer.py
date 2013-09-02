@@ -1,3 +1,4 @@
+# coding: utf-8
 import ply.lex as lex
 from tokens import *
 
@@ -14,6 +15,7 @@ class Lexer:
         t_RPAREN        = '\)'
         t_COMMA         = ','
         t_PLUS          = r'\+'
+        t_TIMES         = '×'
         t_SEMICOLON     = ';'
 
         #function to disambiguate special words
