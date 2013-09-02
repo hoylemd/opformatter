@@ -1,3 +1,4 @@
+# coding: utf-8
 from character import character as character
 import ply.yacc as yacc
 
