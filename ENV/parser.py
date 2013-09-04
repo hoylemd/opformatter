@@ -331,7 +331,10 @@ class Parser:
             melee_attacks : melee_attacks OR EOL melee_attack
                 | melee_attack
             '''
-            p[0] = p[1]
+            if len(p) == 5:
+                p[0] = dict(p[1].items() + p[4].items())
+            else:
+                p[0] = p[1]
 
         def p_melee_attack (p):
             '''
@@ -343,9 +346,9 @@ class Parser:
 
         def p_damage_specification (p):
             '''
-            damage_specification : LPAREN dice_definition damage_type modifier RPAREN
+            damage_specification : LPAREN dice_definition damage_type modifier crit_spec RPAREN
             '''
-            p[0] = {"roll" : p[2], "type" : p[3], "modifier" : p[4]}
+            p[0] = {"roll" : p[2], "type" : p[3], "modifier" : p[4], "critical" : p[5]}
 
         def p_damage_type (p):
             '''
@@ -356,6 +359,14 @@ class Parser:
                 p[0] = p[1]
             else :
                 p[0] = ""
+
+        def p_crit_spec (p):
+            '''
+            crit_spec : SOLIDUS TIMES NUMBER
+                |
+            '''
+            if len(p) == 4:
+                p[0] = p[3]
 
         # utility rules
 
