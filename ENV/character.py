@@ -9,12 +9,15 @@ def modifier_string(modifier):
     return out
 
 def attack_string(attack):
-    out = modifier_string(attack["attack bonus"]) + " ("
+    out = attack["name"] + " "
+    out += modifier_string(attack["attack bonus"]) + " ("
     out += attack["roll"]
     if len(attack["type"]) > 0:
         out += " " + attack["type"]
     if attack["modifier"] != 0:
         out += modifier_string(attack["modifier"])
+    if attack["critical"] > 0:
+        out += "/&times;" + str(attack["critical"])
     out += ")"
     return out
 
@@ -176,7 +179,13 @@ class character:
         out = ""
         if len(self.melee_attacks) > 0:
             out += "*Melee* "
+            attacks = ""
             for atk in self.melee_attacks:
-                out += atk + " " + attack_string(self.melee_attacks[atk])
+                if attacks != "":
+                    attacks += " or\n%(indent-weapon) "
+
+                attacks += attack_string(atk)
+
+            out += attacks
 
         return out

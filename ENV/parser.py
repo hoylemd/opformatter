@@ -325,24 +325,24 @@ class Parser:
             '''
             self.character.melee_attacks = p[2]
 
-
         def p_melee_attacks (p):
             '''
             melee_attacks : melee_attacks OR EOL melee_attack
                 | melee_attack
             '''
             if len(p) == 5:
-                p[0] = dict(p[1].items() + p[4].items())
+                p[0] = p[1] + [p[4]]
             else:
-                p[0] = p[1]
+                p[0] = [p[1]]
 
         def p_melee_attack (p):
             '''
             melee_attack : words modifier damage_specification
             '''
             full_attack_spec = p[3]
+            full_attack_spec["name"] = p[1]
             full_attack_spec["attack bonus"] = p[2]
-            p[0] = {p[1]: full_attack_spec}
+            p[0] = full_attack_spec
 
         def p_damage_specification (p):
             '''
@@ -367,6 +367,8 @@ class Parser:
             '''
             if len(p) == 4:
                 p[0] = p[3]
+            else:
+                p[0] = 0
 
         # utility rules
 
