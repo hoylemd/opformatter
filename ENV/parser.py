@@ -311,6 +311,7 @@ class Parser:
             offense : offense EOL
                 | speed
                 | melee_definition
+                | ranged_definition
             '''
 
         def p_speed (p):
@@ -321,23 +322,30 @@ class Parser:
 
         def p_melee_definition (p):
             '''
-            melee_definition : MELEE melee_attacks
+            melee_definition : MELEE attacks
             '''
             self.character.melee_attacks = p[2]
 
+        def p_ranged_definition (p):
+            '''
+            ranged_definition : RANGED attacks
+            '''
+            self.character.ranged_attacks = p[2]
+
+
         def p_melee_attacks (p):
             '''
-            melee_attacks : melee_attacks OR EOL melee_attack
-                | melee_attack
+            attacks : attacks OR EOL attack
+                | attack
             '''
             if len(p) == 5:
                 p[0] = p[1] + [p[4]]
             else:
                 p[0] = [p[1]]
 
-        def p_melee_attack (p):
+        def p_attack (p):
             '''
-            melee_attack : words modifier damage_specification
+            attack : words modifier damage_specification
             '''
             full_attack_spec = p[3]
             full_attack_spec["name"] = p[1]
@@ -346,7 +354,7 @@ class Parser:
 
         def p_damage_specification (p):
             '''
-            damage_specification : LPAREN dice_def damage_type modifier crit_spec effect_spec RPAREN
+            damage_specification : LPAREN dice_def damage_type optional_modifier crit_spec effect_spec RPAREN
             '''
             p[0] = {
                 "roll" : p[2],
@@ -415,6 +423,16 @@ class Parser:
             dice_def : NUMBER D NUMBER
             '''
             p[0] = str(p[1]) + "d" + str(p[3])
+
+        def p_optional_modifier (p):
+            '''
+            optional_modifier : modifier
+                |
+            '''
+            if len(p) == 2:
+                p[0] = p[1]
+            else:
+                p[0] = 0
 
         def p_modifier (p):
             '''
