@@ -18,6 +18,8 @@ def attack_string(attack):
         out += modifier_string(attack["modifier"])
     if attack["critical"] > 0:
         out += "/&times;" + str(attack["critical"])
+    if len(attack["effect"]) > 0:
+        out += " " + attack["effect"]
     out += ")"
     return out
 
