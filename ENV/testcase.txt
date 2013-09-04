@@ -11,5 +11,5 @@ Defensive Abilities bravery +1, evasion
 OFFENSE
 Speed 30 feet
 Melee whip +6 (1d3 nonlethal+2) or
-mwk handaxe +7 (1d6+2/×3)
-
+mwk handaxe +7 (1d6+2/×3) or
+punching dagger +6 (1d4+2/×3 plus black adder venom)
