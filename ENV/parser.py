@@ -207,13 +207,13 @@ class Parser:
 
         def p_hp_definition (p):
             '''
-            hp_definition : HP NUMBER hit_dice_definition
+            hp_definition : HP NUMBER hit_dice_def
             '''
             self.character.hp = p[2]
 
-        def p_hit_dice_definition (p):
+        def p_hit_dice_def (p):
             '''
-            hit_dice_definition : LPAREN NUMBER HD SEMICOLON hit_dice_list modifier RPAREN
+            hit_dice_def : LPAREN NUMBER HD SEMICOLON hit_dice_list modifier RPAREN
             '''
             self.character.hit_dice = p[2]
             self.character.hit_dice_list = p[5]
@@ -221,8 +221,8 @@ class Parser:
 
         def p_hit_dice_list (p):
             '''
-            hit_dice_list : hit_dice_list PLUS dice_definition
-                | dice_definition
+            hit_dice_list : hit_dice_list PLUS dice_def
+                | dice_def
             '''
             if len(p) == 4:
                 p[0] = p[1] + [p[3]]
@@ -346,9 +346,15 @@ class Parser:
 
         def p_damage_specification (p):
             '''
-            damage_specification : LPAREN dice_definition damage_type modifier crit_spec RPAREN
+            damage_specification : LPAREN dice_def damage_type modifier crit_spec effect_spec RPAREN
             '''
-            p[0] = {"roll" : p[2], "type" : p[3], "modifier" : p[4], "critical" : p[5]}
+            p[0] = {
+                "roll" : p[2],
+                "type" : p[3],
+                "modifier" : p[4],
+                "critical" : p[5],
+                "effect" : p[6]
+            }
 
         def p_damage_type (p):
             '''
@@ -369,6 +375,17 @@ class Parser:
                 p[0] = p[3]
             else:
                 p[0] = 0
+
+        def p_effect_spec (p):
+            '''
+            effect_spec : words
+                |
+            '''
+            effect_string = ""
+            if len(p) == 2:
+                effect_string = p[1]
+
+            p[0] = effect_string;
 
         # utility rules
 
@@ -393,9 +410,9 @@ class Parser:
             else :
                 p[0] = p[1]
 
-        def p_dice_definition (p):
+        def p_dice_def (p):
             '''
-            dice_definition : NUMBER D NUMBER
+            dice_def : NUMBER D NUMBER
             '''
             p[0] = str(p[1]) + "d" + str(p[3])
 
