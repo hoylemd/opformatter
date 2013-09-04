@@ -14,6 +14,7 @@ abbreviations = {
     'Speed': 'SPEED',
     'feet': 'FEET',
     'Melee': 'MELEE',
+    'Ranged': 'RANGED',
 }
 
 ability_abbreviations = {
