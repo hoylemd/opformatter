@@ -7,7 +7,7 @@ runcommand = python main.py
 all : test
 
 clean :
-	rm -rf $(testoutput) *.pyc parsetab.py parser.out
+	rm -rf $(testoutput) *.pyc parsetab.py parser.out tokens.txt
 
 test : clean $(testinput) $(codefiles)
 	cat $(testinput) | $(runcommand) > $(testoutput)

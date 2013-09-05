@@ -68,6 +68,8 @@ class Lexer:
         self.lexer = lex.lex()
 
     def readTokens(self, input_string):
+        out = ""
         self.lexer.input(input_string);
         for tok in self.lexer:
-            print tok
+            out += str(tok) + "\n"
+        return out

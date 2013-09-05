@@ -11,6 +11,10 @@ if __name__ == "__main__":
 
     input_string = "".join(lines)
 
+    f = open ("tokens.txt", "w")
+    f.write(Lexer().readTokens(input_string))
+    f.close();
+
     parser = Parser(Lexer())
 
     parser.parse(input_string)
