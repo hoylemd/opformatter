@@ -15,6 +15,8 @@ abbreviations = {
     'feet': 'FEET',
     'Melee': 'MELEE',
     'Ranged': 'RANGED',
+    'Special': 'SPECIAL',
+    'Attacks': 'ATTACKS',
 }
 
 ability_abbreviations = {
