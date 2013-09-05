@@ -312,6 +312,7 @@ class Parser:
                 | speed
                 | melee_definition
                 | ranged_definition
+                | special_attacks_definition
             '''
 
         def p_speed (p):
@@ -332,8 +333,7 @@ class Parser:
             '''
             self.character.ranged_attacks = p[2]
 
-
-        def p_melee_attacks (p):
+        def p_attacks (p):
             '''
             attacks : attacks OR EOL attack
                 | attack
@@ -351,6 +351,28 @@ class Parser:
             full_attack_spec["name"] = p[1]
             full_attack_spec["attack bonus"] = p[2]
             p[0] = full_attack_spec
+
+        def p_special_attacks_definition (p):
+            '''
+            special_attacks_definition : SPECIAL ATTACKS special_attacks
+            '''
+            self.character.special_attacks = p[3]
+
+        def p_special_attacks (p):
+            '''
+            special_attacks : special_attacks COMMA special_attack
+                | special_attack
+            '''
+            if len(p) == 4:
+                p[0] = p[1] + [p[3]]
+            else :
+                p[0] = [p[1]]
+
+        def p_special_attack (p):
+            '''
+            special_attack : words optional_modifier
+            '''
+            p[0] = {"name" : p[1], "value" : p[2]}
 
         def p_damage_specification (p):
             '''
@@ -418,12 +440,6 @@ class Parser:
             else :
                 p[0] = p[1]
 
-        def p_dice_def (p):
-            '''
-            dice_def : NUMBER D NUMBER
-            '''
-            p[0] = str(p[1]) + "d" + str(p[3])
-
         def p_optional_modifier (p):
             '''
             optional_modifier : modifier
@@ -436,9 +452,23 @@ class Parser:
 
         def p_modifier (p):
             '''
-            modifier : PLUS NUMBER
+            modifier : PLUS value
             '''
             p[0] = p[2]
+
+        def p_value (p):
+            '''
+            value : NUMBER
+                | dice_def
+            '''
+            p[0] = p[1]
+
+        def p_dice_def (p):
+            '''
+            dice_def : NUMBER D NUMBER
+            '''
+            p[0] = str(p[1]) + "d" + str(p[3])
+
 
         # Compute column.
         # token is a token instance
