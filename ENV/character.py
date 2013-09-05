@@ -1,10 +1,10 @@
 def modifier_string(modifier):
-    out = ""
+    out = str(modifier);
 
-    if modifier > 0:
-        out += "+"
-
-    out += str(modifier);
+    if out == "0":
+        out = ""
+    elif out[0] != "-":
+        out = "+" + out
 
     return out
 
@@ -194,4 +194,14 @@ class character:
             if out != "":
                 out += "\n"
             out += "*Ranged* " + attack_list_string(self.ranged_attacks)
+        if len(self.special_attacks) > 0:
+            if out != "":
+                out += "\n"
+            attacks = ""
+            for atk in self.special_attacks:
+                if attacks != "":
+                    attacks += ", "
+                attacks += atk["name"] + " " + modifier_string(atk["value"])
+            out += "*Special Attacks* " + attacks
+
         return out
