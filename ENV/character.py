@@ -189,5 +189,16 @@ class character:
                 attacks += attack_string(atk)
 
             out += attacks
+        if len(self.ranged_attacks) > 0:
+            if out != "":
+                out += "\n"
+            out += "*Ranged* "
+            attacks = ""
+            for atk in self.ranged_attacks:
+                if attacks != "":
+                    attacks += " or\n%(indent-weapon) "
+
+                attacks += attack_string(atk)
+            out += attacks
 
         return out
