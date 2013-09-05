@@ -23,6 +23,15 @@ def attack_string(attack):
     out += ")"
     return out
 
+def attack_list_string(list):
+    attacks = ""
+    for atk in list:
+        if attacks != "":
+            attacks += " or\n%(indent-weapon) "
+
+        attacks += attack_string(atk)
+    return attacks
+
 class character:
     def output(self):
         out = "h3. " + self.name + "\n"
@@ -180,25 +189,9 @@ class character:
     def attacks_string(self):
         out = ""
         if len(self.melee_attacks) > 0:
-            out += "*Melee* "
-            attacks = ""
-            for atk in self.melee_attacks:
-                if attacks != "":
-                    attacks += " or\n%(indent-weapon) "
-
-                attacks += attack_string(atk)
-
-            out += attacks
+            out += "*Melee* " + attack_list_string(self.melee_attacks)
         if len(self.ranged_attacks) > 0:
             if out != "":
                 out += "\n"
-            out += "*Ranged* "
-            attacks = ""
-            for atk in self.ranged_attacks:
-                if attacks != "":
-                    attacks += " or\n%(indent-weapon) "
-
-                attacks += attack_string(atk)
-            out += attacks
-
+            out += "*Ranged* " + attack_list_string(self.ranged_attacks)
         return out
