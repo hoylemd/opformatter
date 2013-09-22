@@ -13,12 +13,12 @@ if __name__ == "__main__":
     input = InputBlock("".join(lines));
 
     f = open ("tokens.txt", "w")
-    f.write(Lexer().readTokens(input.raw))
+    f.write(Lexer().readTokens(input.parsable))
     f.close();
 
     parser = Parser(Lexer())
 
-    parser.parse(input.raw)
+    parser.parse(input.parsable)
 
     if parser.error <> True:
         print parser.character.output()
