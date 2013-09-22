@@ -15,3 +15,12 @@ mwk handaxe +7 (1d6+2/×3) or
 punching dagger +6 (1d4+2/×3 plus black adder venom)
 Ranged shortbow +6 (1d6/×3)
 Special Attacks sneak attack +1d6
+TACTICS
+During Combat Scourge prefers intimidating opponents
+to fighting them. Once in combat, he attempts to attack
+from behind, flanking with his allies.
+Morale If reduced to 10 hit points or fewer, Scourge flees
+and tries to make good his escape. A man who bears
+a grudge, Scourge is certain to try to slip dark reaver
+powder or oil of taggit into the meal or drink of anyone
+who humiliates or injures him when the chance comes.
