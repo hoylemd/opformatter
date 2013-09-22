@@ -26,7 +26,7 @@ class InputBlock:
                 value = tactics_block[found.end():]
 
             # strip newlines
-            self.tactics[name] = value.replace('\n', ' ')
+            self.tactics[name] = value.replace('\n', ' ').rstrip()
 
             # stage the next tactic
             found = next
