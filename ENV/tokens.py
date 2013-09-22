@@ -35,6 +35,7 @@ conjunctions = {
 blocks = {
     'DEFENSE' : 'DEFENSE',
     'OFFENSE' : 'OFFENSE',
+    'STATISTICS' : 'STATISTICS',
 }
 
 special_words = {

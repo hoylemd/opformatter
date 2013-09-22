@@ -21,6 +21,7 @@ class Parser:
             block : overview
                 | defense_block
                 | offense_block
+                | statistics_block
             '''
 
         def p_overview (p):
@@ -417,6 +418,51 @@ class Parser:
 
             p[0] = effect_string;
 
+        def p_statistics_block (p):
+            '''
+            statistics_block : STATISTICS EOL statistic_chunks
+                | STATISTICS statistic_chunks
+            '''
+
+        def p_statistic_chunks (p):
+            '''
+            statistic_chunks : statistic_chunks EOL statistic_chunk
+                | statistic_chunk
+            '''
+
+        def p_statistic_chunk (p):
+            '''
+            statistic_chunk : ability_scores
+            '''
+
+        def p_ability_scores (p):
+            '''
+            ability_scores : ability_list
+            '''
+            self.character.abilities = p[1]
+
+
+        def p_ability_list (p):
+            '''
+            ability_list : ability_list COMMA ability_score
+                | ability_score
+            '''
+            if len(p) == 4:
+                p[0] = dict(p[3].items() + p[1].items())
+            else:
+                p[0] = p[1]
+
+        def p_ability_score (p):
+            '''
+            ability_score : ability NUMBER
+            '''
+            if len(p) == 3:
+                p[0] = { p[1]  : p[2]}
+            else:
+                p[0] = { p[1]  : None}
+
+
+
         # utility rules
 
         def p_wordlist (p) :
@@ -468,6 +514,17 @@ class Parser:
             dice_def : NUMBER D NUMBER
             '''
             p[0] = str(p[1]) + "d" + str(p[3])
+
+        def p_ability (p):
+            '''
+            ability : STR
+                | DEX
+                | CON
+                | INT
+                | WIS
+                | CHA
+            '''
+            p[0] = p[1]
 
 
         # Compute column.
