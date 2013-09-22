@@ -481,22 +481,25 @@ class Parser:
 
         # error rule
         def p_error (p):
-            print "syntax error at " + str(p.type) + " token '" + str(p.value),
-            print  "' at position " + str(find_column(p)) + ", line " + str(p.lineno)
-            #self.lex.readTokens(self.input)
+            if p:
+                print "syntax error at " + str(p.type) + " token '" + str(p.value),
+                print  "' at position " + str(find_column(p)) + ", line " + str(p.lineno),
+                print " in rule " + str(self.rule)
+                #self.lex.readTokens(self.input)
 
-            self.error = True
+                self.error = True
 
-        self.error = False;
+        self.error = False
         self.lex = lex
+        self.rule = ""
 
         tokens = lex.tokens
 
         self.parser = yacc.yacc()
 
-        self.character = character();
+        self.character = character()
 
     def parse(self, s):
-        self.input = s;
+        self.input = s
         result = self.parser.parse(s, lexer=self.lex.lexer)
         return result
