@@ -21,4 +21,6 @@ if __name__ == "__main__":
     parser.parse(input.parsable)
 
     if parser.error <> True:
+        parser.character.tactics = input.tactics
+
         print parser.character.output()

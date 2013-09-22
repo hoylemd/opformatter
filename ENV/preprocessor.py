@@ -14,7 +14,7 @@ class InputBlock:
         # keep grabbing tactic sections
         while (found):
             # grab the tactic name
-            name = tactics_block[found.start()+1:found.end()]
+            name = tactics_block[found.start() + 1:found.end() - 1]
 
             # find the next one
             next = sections.search(tactics_block, found.end())

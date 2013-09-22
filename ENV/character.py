@@ -53,6 +53,9 @@ class character:
         out += "h3. Offense\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
         out += self.attacks_string() + "\n"
+        out += "\n"
+        out += "h3. Tactics\n"
+        out += self.tactics_string() + "\n"
 
         return out;
 
@@ -205,3 +208,12 @@ class character:
             out += "*Special Attacks* " + attacks
 
         return out
+
+    def tactics_string(self):
+        out = ""
+        for tactic in self.tactics:
+            if len(out) :
+                out += "\n"
+            out += "*" + tactic + "*: " + self.tactics[tactic]
+
+        return out;
