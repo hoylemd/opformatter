@@ -17,6 +17,10 @@ abbreviations = {
     'Ranged': 'RANGED',
     'Special': 'SPECIAL',
     'Attacks': 'ATTACKS',
+    'Base': 'BASE',
+    'Atk': 'ATTACK',
+    'CMB': 'CMB',
+    'CMD': 'CMD',
 }
 
 ability_abbreviations = {
