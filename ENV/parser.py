@@ -433,6 +433,7 @@ class Parser:
         def p_statistic_chunk (p):
             '''
             statistic_chunk : ability_scores
+                | combat_modifiers
             '''
 
         def p_ability_scores (p):
@@ -440,7 +441,6 @@ class Parser:
             ability_scores : ability_list
             '''
             self.character.abilities = p[1]
-
 
         def p_ability_list (p):
             '''
@@ -461,7 +461,31 @@ class Parser:
             else:
                 p[0] = { p[1]  : None}
 
+        def p_combat_modifiers (p) :
+            '''
+            combat_modifiers : base_attack_bonus SEMICOLON combat_maneuver_bonus SEMICOLON combat_maneuver_defense
+            '''
+            self.character.base_attack_bonus = p[1]
+            self.character.combat_maneuver_bonus = p[3]
+            self.character.combat_maneuver_defense = p[5]
 
+        def p_base_attack_bonus (p) :
+            '''
+            base_attack_bonus : BASE ATTACK modifier
+            '''
+            p[0] = p[3]
+
+        def p_combat_maneuver_bonus (p):
+            '''
+            combat_maneuver_bonus : CMB modifier
+            '''
+            p[0] = p[2]
+
+        def p_combat_maneuver_defense (p):
+            '''
+            combat_maneuver_defense : CMD NUMBER
+            '''
+            p[0] = p[2]
 
         # utility rules
 
