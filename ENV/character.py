@@ -32,6 +32,16 @@ def attack_list_string(list):
         attacks += attack_string(atk)
     return attacks
 
+# list of ability scores in order
+abilities = (
+   "Str",
+   "Dex",
+   "Con",
+   "Int",
+   "Wis",
+   "Cha",
+)
+
 class character:
     def output(self):
         out = "h3. " + self.name + "\n"
@@ -56,6 +66,9 @@ class character:
         out += "\n"
         out += "h3. Tactics\n"
         out += self.tactics_string() + "\n"
+        out += "\n"
+        out += "h3. Statistics\n"
+        out += self.abilities_string() + "\n"
 
         return out;
 
@@ -215,5 +228,15 @@ class character:
             if len(out) :
                 out += "\n"
             out += "*" + tactic + "*: " + self.tactics[tactic]
+
+        return out;
+
+    # method to print out the ability scores of a character
+    def abilities_string(self):
+        out = ""
+        for ability in abilities:
+            if len(out) > 0:
+                out += ", "
+            out += "*" + ability + "* " + str(self.abilities[ability])
 
         return out;
