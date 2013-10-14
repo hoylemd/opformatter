@@ -1,4 +1,5 @@
 # coding: utf-8
+import sys
 from lexer import Lexer
 from parser import Parser
 from preprocessor import InputBlock
