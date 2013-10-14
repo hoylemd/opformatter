@@ -8,28 +8,45 @@ def modifier_string(modifier):
 
     return out
 
+# function to generate an attack string for an attack
 def attack_string(attack):
+    # start with the name and attack bonus
     out = attack["name"] + " "
     out += modifier_string(attack["attack bonus"]) + " ("
+
+    # add the damage roll
     out += attack["roll"]
+
+    # add the type and modifier, if they exist
     if len(attack["type"]) > 0:
         out += " " + attack["type"]
     if attack["modifier"] != 0:
         out += modifier_string(attack["modifier"])
-    if attack["critical"] > 0:
+
+    # add the critical
+    if attack["critical"] > 2:
         out += "/&times;" + str(attack["critical"])
+
+    # add the effect, if any
     if len(attack["effect"]) > 0:
         out += " " + attack["effect"]
     out += ")"
+
     return out
 
+# function to generate an attack line from a list of attacks
 def attack_list_string(list):
     attacks = ""
+
+    # traverse the list
     for atk in list:
+        # indent if this is not the first
         if attacks != "":
             attacks += " or\n%(indent-weapon) "
 
+        # render the attack string
         attacks += attack_string(atk)
+
     return attacks
 
 # list of ability scores in order
@@ -80,7 +97,46 @@ skills = [
     "Swim",
     "Use Magic Device",
 ]
+
 class character:
+    def __init__ (self):
+        self.name = ""
+        self.challenge = 0
+        self.xp_value = 0
+        self.gender = "None"
+        self.race = "Human"
+        self.classes = {}
+        self.alignment = {'moral' : 0, 'ethical' : 0}
+        self.size = "Medium"
+        self.types = {'primary': 'Humanoid', 'subtypes': []}
+        self.initiative = 0;
+        self.senses = {"Perception" : 0}
+        self.acs = {"alternates" : {"Touch": 10, "Flat-Footed": 10}, "sources" : {}}
+        self.hp = 8
+        self.hit_dice = ["1d8"]
+        self.hp_modifier = 0
+        self.saves = {"Fort" : 0, "Ref" : 0, "Will" : 0}
+        self.defensive_abilities = {}
+        self.speed = 30
+        self.melee_attacks = [{
+            'name': 'Unarmed',
+            'attack bonus' : 0,
+            'roll' : '1d3',
+            'type' : 'nonlethal',
+            'modifier' : 0,
+            'critical' : 2,
+            'effect' : ''
+        },]
+        self.ranged_attacks = []
+        self.special_attacks = []
+        self.tactics = {}
+        self.abilities = {"Str": 10, "Dex": 10, "Con": 10, "Int": 10, "Wis": 10, "Cha": 10}
+        self.base_attack_bonus = 0
+        self.combat_maneuver_bonus = 0
+        self.combat_maneuver_defense = 10
+        self.feats = []
+        self.skills = {}
+
     def output(self):
         out = "h3. " + self.name + "\n"
         out += "*CR* " + str(self.challenge) + "\n"
@@ -89,7 +145,7 @@ class character:
         out += self.class_string() + "\n"
         out += self.alignment_string() + " " + self.size
         out += " " + self.creature_type_string() + "\n"
-        out += "*Initiative* " + self.initiative_string() + "\n"
+        out += "*Initiative* " + modifier_string(self.initiative) + "\n"
         out += "*Senses* " + self.senses_string() + "\n"
         out += "\n"
         out += "h3. Defense\n"
@@ -113,6 +169,7 @@ class character:
 
         return out;
 
+    # method to generate a string representing this character's classes
     def class_string(self):
         out = ""
         for char_class in self.classes:
@@ -159,16 +216,14 @@ class character:
 
         return out
 
-    def initiative_string(self):
-        return modifier_string(self.initiative)
-
+    # method to print out the Senses line
     def senses_string(self):
         out = ""
 
+        # iterate over the senses and print them
         for sense in self.senses.keys():
             if out != "":
                 out += ", "
-
             out += sense + " " + modifier_string(self.senses[sense])
 
         return out
@@ -194,6 +249,7 @@ class character:
 
         return str(total_ac) + alts + " " + components
 
+    # method to print out the hit points line
     def hp_string(self):
         out = str(self.hp) + " "
 
@@ -243,14 +299,18 @@ class character:
 
         return out
 
+    # method t generate the attacks lines
     def attacks_string(self):
         out = ""
+        # generate the melee lines
         if len(self.melee_attacks) > 0:
             out += "*Melee* " + attack_list_string(self.melee_attacks)
+        # generate the ranged lines
         if len(self.ranged_attacks) > 0:
             if out != "":
                 out += "\n"
             out += "*Ranged* " + attack_list_string(self.ranged_attacks)
+        # generate the special lines
         if len(self.special_attacks) > 0:
             if out != "":
                 out += "\n"

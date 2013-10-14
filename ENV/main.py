@@ -12,7 +12,10 @@ if __name__ == "__main__":
         lines.append(line)
 
     # preprocess the text
-    input = InputBlock("".join(lines));
+    input = InputBlock("".join(lines))
+
+    # start the character
+    character = input.spawnCharacter()
 
     # lex the text
     f = open ("tokens.txt", "w")
@@ -20,13 +23,9 @@ if __name__ == "__main__":
     f.close();
 
     # parse the text
-    parser = Parser(Lexer())
+    parser = Parser(Lexer(), character)
     parser.parse(input.parsable)
 
     # if the parse proceeded reasonably, add the preprocessed blocks
     if parser.error <> True:
-        parser.character.tactics = input.tactics
-        parser.character.feats = input.feats
-        parser.character.skills = input.skills
-
         print parser.character.output()

@@ -4,7 +4,7 @@ import ply.yacc as yacc
 
 class Parser:
     # error rule
-    def __init__(self, lex):
+    def __init__(self, lex, char):
         def p_obsidianFormat (p):
             '''
             obsidianFormat : blocks
@@ -580,7 +580,7 @@ class Parser:
 
         self.parser = yacc.yacc()
 
-        self.character = character()
+        self.character = char
 
     def parse(self, s):
         self.input = s

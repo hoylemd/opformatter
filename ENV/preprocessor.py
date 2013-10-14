@@ -1,5 +1,6 @@
 import sys
 import re
+from character import character
 
 # class to preprocess input blocks
 class InputBlock:
@@ -128,3 +129,18 @@ class InputBlock:
 
 	# excise the Other Gear section
 	self.ingestOtherGear(self.exciseBlock("; Other Gear"))
+
+    # method to spawn a character using the preprocessed blocks
+    def spawnCharacter (self):
+	char = character();
+
+	# install the preprocessed blocks
+	char.tactics = self.tactics
+	char.feats = self.feats
+	char.skills = self.skills
+	char.languages = self.languages
+	char.special_qualities = self.special_qualities
+	char.combat_gear = self.combat_gear
+	char.other_gear = self.other_gear
+
+	return char;
