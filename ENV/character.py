@@ -69,6 +69,7 @@ class character:
         out += "\n"
         out += "h3. Statistics\n"
         out += self.abilities_string() + "\n"
+        out += self.combat_modifiers_string() + "\n"
 
         return out;
 
@@ -240,3 +241,11 @@ class character:
             out += "*" + ability + "* " + str(self.abilities[ability])
 
         return out;
+
+    def combat_modifiers_string(self):
+        out = ""
+        out += "*BAB* " + modifier_string(self.base_attack_bonus) + ", "
+        out += "*CMB* " + modifier_string(self.combat_maneuver_bonus) + ", "
+        out += "*CMD* " + str(self.combat_maneuver_defense)
+
+        return out
