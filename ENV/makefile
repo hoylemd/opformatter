@@ -1,7 +1,8 @@
 testinput = testcase.txt
 testoutput = test.out
 testgold = test.gold
-codefiles = main.py lexer.py parser.py character.py
+charactergold = character_blank.gold
+codefiles = main.py tokens.py lexer.py parser.py character.py
 runcommand = python main.py
 
 all : test
@@ -12,4 +13,8 @@ clean :
 test : clean $(testinput) $(codefiles)
 	cat $(testinput) | $(runcommand) > $(testoutput)
 	diff $(testoutput) $(testgold)
+
+test_character : clean $(codefiles)
+	python test_character.py > $(testoutput)
+	diff $(testoutput) $(charactergold) > .output
 

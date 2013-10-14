@@ -1,9 +1,8 @@
+# function to turn an integer into a printable modifier
 def modifier_string(modifier):
     out = str(modifier);
 
-    if out == "0":
-        out = ""
-    elif out[0] != "-":
+    if out[0] != "-":
         out = "+" + out
 
     return out
@@ -100,7 +99,7 @@ skills = [
 
 class character:
     def __init__ (self):
-        self.name = ""
+        self.name = "Nobody"
         self.challenge = 0
         self.xp_value = 0
         self.gender = "None"
@@ -108,14 +107,16 @@ class character:
         self.classes = {}
         self.alignment = {'moral' : 0, 'ethical' : 0}
         self.size = "Medium"
-        self.types = {'primary': 'Humanoid', 'subtypes': []}
+        self.creature_type = {'primary': 'Humanoid', 'subtypes': []}
         self.initiative = 0;
         self.senses = {"Perception" : 0}
-        self.acs = {"alternates" : {"Touch": 10, "Flat-Footed": 10}, "sources" : {}}
+        self.ac = {"alternates" : [{'type' : "touch", 'value': 10}, {'type': "flat-footed", 'value': 10}], "sources" : {}}
         self.hp = 8
-        self.hit_dice = ["1d8"]
+        self.hit_dice = 1
+        self.hit_dice_list = ["1d8"]
         self.hp_modifier = 0
         self.saves = {"Fort" : 0, "Ref" : 0, "Will" : 0}
+        self.save_modifiers = []
         self.defensive_abilities = {}
         self.speed = 30
         self.melee_attacks = [{
@@ -152,15 +153,19 @@ class character:
         out += "*AC* " + self.ac_string() + "\n"
         out += "*HP* " + self.hp_string() + "\n"
         out += self.saves_string() + "\n"
-        out += self.defensive_abilities_string() + "\n"
+        defensive_abilities = self.defensive_abilities_string()
+        if len(defensive_abilities) > 0:
+            out += defensive_abilities + "\n"
         out += "\n"
         out += "h3. Offense\n"
         out += "*Speed* " + str(self.speed) + " ft.\n"
         out += self.attacks_string() + "\n"
         out += "\n"
-        out += "h3. Tactics\n"
-        out += self.tactics_string() + "\n"
-        out += "\n"
+        tactics = self.tactics_string()
+        if (len(tactics) > 0):
+            out += "h3. Tactics\n"
+            out += tactics + "\n"
+            out += "\n"
         out += "h3. Statistics\n"
         out += self.abilities_string() + "\n"
         out += self.combat_modifiers_string() + "\n"
@@ -247,7 +252,11 @@ class character:
         if len(components) > 0:
             components +=")"
 
-        return str(total_ac) + alts + " " + components
+        out = str(total_ac) + alts
+        if len(components) > 0:
+            out += " " + components
+
+        return out
 
     # method to print out the hit points line
     def hp_string(self):
