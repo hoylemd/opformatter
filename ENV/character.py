@@ -71,6 +71,7 @@ class character:
         out += self.abilities_string() + "\n"
         out += self.combat_modifiers_string() + "\n"
         out += self.feats_string() + "\n"
+        out += self.skills_string() + "\n"
 
         return out;
 
@@ -252,10 +253,18 @@ class character:
 
         return out
 
-    # method to priont out the list of feats
+    # method to print out the list of feats
     def feats_string(self):
         out = "*Feats*:"
         for feat in self.feats:
             out += "\n * " + feat
+
+        return out
+
+    # method to print out the skills dict
+    def skills_string(self):
+        out = "*Skills*:"
+        for skill in self.skills:
+            out += "\n * " + skill + " " + modifier_string(self.skills[skill])
 
         return out

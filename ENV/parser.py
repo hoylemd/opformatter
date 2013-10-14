@@ -30,8 +30,10 @@ class Parser:
             '''
 
         def p_statlist (p):
-            '''statlist : statlist stat
-                        | stat'''
+            '''
+            statlist : statlist stat
+                | stat
+            '''
 
         def p_stat (p):
             '''

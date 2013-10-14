@@ -1,4 +1,4 @@
-
+import sys
 import re
 
 # class to preprocess input blocks
@@ -48,6 +48,14 @@ class InputBlock:
     # method to ingest a skills list
     def ingestSkills (self, skills_block):
 	self.skills = {}
+
+	# sanitize the string
+	skills_string = skills_block[7:].replace('\n', ' ').rstrip()
+
+	# build the skills dictionary
+	for skill in skills_string.split(", "):
+	   mod_index = skill.rfind(" ");
+	   self.skills[skill[:mod_index]] = int(skill[mod_index:]);
 
     # method to ingest a languages list
     def ingestLanguages (self, languages_block):

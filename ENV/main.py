@@ -27,5 +27,6 @@ if __name__ == "__main__":
     if parser.error <> True:
         parser.character.tactics = input.tactics
         parser.character.feats = input.feats
+        parser.character.skills = input.skills
 
         print parser.character.output()
