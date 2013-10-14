@@ -70,6 +70,7 @@ class character:
         out += "h3. Statistics\n"
         out += self.abilities_string() + "\n"
         out += self.combat_modifiers_string() + "\n"
+        out += self.feats_string() + "\n"
 
         return out;
 
@@ -242,10 +243,19 @@ class character:
 
         return out;
 
+    # method to print out combat modifiers
     def combat_modifiers_string(self):
         out = ""
         out += "*BAB* " + modifier_string(self.base_attack_bonus) + ", "
         out += "*CMB* " + modifier_string(self.combat_maneuver_bonus) + ", "
         out += "*CMD* " + str(self.combat_maneuver_defense)
+
+        return out
+
+    # method to priont out the list of feats
+    def feats_string(self):
+        out = "*Feats*:"
+        for feat in self.feats:
+            out += "\n * " + feat
 
         return out

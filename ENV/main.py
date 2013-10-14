@@ -26,5 +26,6 @@ if __name__ == "__main__":
     # if the parse proceeded reasonably, add the preprocessed blocks
     if parser.error <> True:
         parser.character.tactics = input.tactics
+        parser.character.feats = input.feats
 
         print parser.character.output()
