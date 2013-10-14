@@ -33,15 +33,53 @@ def attack_list_string(list):
     return attacks
 
 # list of ability scores in order
-abilities = (
-   "Str",
-   "Dex",
-   "Con",
-   "Int",
-   "Wis",
-   "Cha",
-)
-
+abilities = [
+    "Str",
+    "Dex",
+    "Con",
+    "Int",
+    "Wis",
+    "Cha",
+]
+# list of skills in order
+skills = [
+    "Acrobatics",
+    "Appraise",
+    "Bluff",
+    "Climb",
+    "Craft",
+    "Diplomacy",
+    "Disable Device",
+    "Disguise",
+    "Escape Artist",
+    "Fly",
+    "Handle Animal",
+    "Heal",
+    "Intimidate",
+    "Knowledge (arcana)",
+    "Knowledge (dungeoneering)",
+    "Knowledge (engineering)",
+    "Knowledge (geography)",
+    "Knowledge (history)",
+    "Knowledge (local)",
+    "Knowledge (nature)",
+    "Knowledge (nobility)",
+    "Knowledge (planes)",
+    "Knowledge (religion)",
+    "Linguistics",
+    "Perception",
+    "Perform",
+    "Profession",
+    "Profession (sailor)",
+    "Ride",
+    "Sense Motive",
+    "Sleight of Hand",
+    "Spellcraft",
+    "Stealth",
+    "Survival",
+    "Swim",
+    "Use Magic Device",
+]
 class character:
     def output(self):
         out = "h3. " + self.name + "\n"
@@ -264,7 +302,8 @@ class character:
     # method to print out the skills dict
     def skills_string(self):
         out = "*Skills*:"
-        for skill in self.skills:
-            out += "\n * " + skill + " " + modifier_string(self.skills[skill])
+        for skill in skills:
+            if skill in self.skills:
+                out += "\n * " + skill + " " + modifier_string(self.skills[skill])
 
         return out
